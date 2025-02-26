@@ -61,7 +61,7 @@ function Factory({ factory }: { factory: FactoryState }) {
         <Label htmlFor="amount">Amount for {factory.name}</Label>
         <Input
           type="number"
-          value={amount}
+          value={amount === 0 ? "" : amount}
           onChange={(e) => setAmount(Number(e.target.value))}
         />
       </fieldset>

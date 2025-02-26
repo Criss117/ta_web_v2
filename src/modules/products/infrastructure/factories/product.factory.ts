@@ -8,6 +8,8 @@ export class ProductFactory {
   static instance: ProductFactory;
   private products: ProductPrimitive[] = [];
 
+  private constructor() {}
+
   public static getInstance() {
     if (!this.instance) {
       this.instance = new ProductFactory();
@@ -17,7 +19,7 @@ export class ProductFactory {
 
   public async execute(amount: number) {
     console.info("Executing...");
-    FakerFacade.getFaker().then(({ faker }) => {
+    FakerFacade.getFaker().then(async ({ faker }) => {
       this.products = Array.from({ length: amount }, (_, i) => ({
         id: i + 1,
         description: faker.commerce.productName(),
@@ -33,16 +35,14 @@ export class ProductFactory {
         deletedAt: null,
         isActive: true,
       }));
+      const productTable = await ProductModel.getInstance().useTable();
+      console.info("Clearing Table...");
+      await productTable.clear();
+
+      console.info("Inserting...");
+      await productTable.bulkAdd(this.products);
+      console.info("Done!");
     });
-
-    const productTable = await ProductModel.getInstance().useTable();
-
-    console.info("Clearing Table...");
-    await productTable.clear();
-
-    console.info("Inserting...");
-    await productTable.bulkAdd(this.products);
-    console.info("Done!");
   }
 }
 
