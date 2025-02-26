@@ -1,0 +1,55 @@
+import { Package } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+
+import { Button } from "./ui/button";
+import { Clock } from "./ui/clock";
+
+import { Route as dashRoute } from "@/routes/dashboard/_layout/index";
+import { Route as productsRoute } from "@/routes/dashboard/_layout/products";
+
+const NAVITEMS = [
+  {
+    name: "Ventas",
+    href: dashRoute.to,
+    Icon: Package,
+  },
+  {
+    name: "Productos",
+    href: productsRoute.to,
+    Icon: Package,
+  },
+];
+export function Navbar() {
+  const { pathname } = useLocation();
+
+  return (
+    <nav className="py-4 flex px-10 z-50 bg-light-200 fixed h-32 top-0 w-full justify-between shadow-md">
+      <div className="flex justify-between flex-col gap-y-5">
+        <h1 className="text-3xl font-bold text-lighttext-100">
+          Tienda Andres - Web App
+        </h1>
+        <ul className="flex gap-5">
+          {NAVITEMS.map(({ name, href, Icon }) => (
+            <Button
+              key={href}
+              asChild
+              variant={pathname + "/" === href ? "default" : "outline"}
+              className="gap-2"
+            >
+              <Link to={href}>
+                <span>
+                  <Icon size={20} />
+                </span>
+                {name}
+              </Link>
+            </Button>
+          ))}
+        </ul>
+      </div>
+      <div className="flex justify-between flex-col">
+        <Clock />
+        {/* <SyncNotification /> */}
+      </div>
+    </nav>
+  );
+}
