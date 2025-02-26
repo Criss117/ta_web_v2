@@ -15,7 +15,10 @@ export class UpdateProductUseCase {
   }
 
   public async execute(id: number, product: ProductFormDto) {
-    const productMapped = ProductsMapper.formToDomain(product);
+    const productMapped = ProductsMapper.formToDomain({
+      ...product,
+      id: id,
+    });
 
     return await this.productRepository.edit(id, productMapped);
   }

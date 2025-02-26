@@ -7,11 +7,18 @@ import {
 export class ProductFactory {
   static instance: ProductFactory;
   private products: ProductPrimitive[] = [];
-  public isReady = false;
 
-  private constructor(private readonly size: number) {
+  public static getInstance() {
+    if (!this.instance) {
+      this.instance = new ProductFactory();
+    }
+    return this.instance;
+  }
+
+  public async execute(amount: number) {
+    console.info("Executing...");
     FakerFacade.getFaker().then(({ faker }) => {
-      this.products = Array.from({ length: this.size }, (_, i) => ({
+      this.products = Array.from({ length: amount }, (_, i) => ({
         id: i + 1,
         description: faker.commerce.productName(),
         barcode: faker.commerce.isbn({ separator: "" }),
@@ -26,20 +33,7 @@ export class ProductFactory {
         deletedAt: null,
         isActive: true,
       }));
-
-      this.isReady = true;
     });
-  }
-
-  public static getInstance(size: number) {
-    if (!this.instance) {
-      this.instance = new ProductFactory(size);
-    }
-    return this.instance;
-  }
-
-  public async execute() {
-    console.info("Executing...");
 
     const productTable = await ProductModel.getInstance().useTable();
 
@@ -51,3 +45,5 @@ export class ProductFactory {
     console.info("Done!");
   }
 }
+
+export const productFactory = ProductFactory.getInstance();

@@ -24,7 +24,9 @@ export class Model<T, K = number> {
     field: keyof T,
     value: string | number
   ): Promise<T | undefined> {
-    return this.table.get({ [field]: value });
+    const model = await this.table.get({ [field]: value });
+
+    return model ? model : undefined;
   }
 
   async getAll(): Promise<T[]> {

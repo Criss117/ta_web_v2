@@ -6,6 +6,7 @@ import { Clock } from "./ui/clock";
 
 import { Route as dashRoute } from "@/routes/dashboard/_layout/index";
 import { Route as productsRoute } from "@/routes/dashboard/_layout/products";
+import { DataBaseFactorySheet } from "./data-base-factory.sheet";
 
 const NAVITEMS = [
   {
@@ -50,6 +51,8 @@ export function Navbar() {
         <Clock />
         {/* <SyncNotification /> */}
       </div>
+
+      <DataBaseFactorySheet />
     </nav>
   );
 }

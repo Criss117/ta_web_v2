@@ -34,17 +34,6 @@ export const Route = createFileRoute("/dashboard/_layout/products/")({
 function RouteComponent() {
   const { page, size, query } = Route.useSearch();
 
-  // const executeFactory = () => {
-  //   const factory = ProductFactory.getInstance(1000);
-
-  //   if (!factory.isReady) {
-  //     console.log("Waiting, factory is not ready...");
-  //     return;
-  //   }
-
-  //   factory.execute();
-  // };
-
   return (
     <>
       <SectionTitle>Productos</SectionTitle>

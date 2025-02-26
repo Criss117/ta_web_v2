@@ -10,3 +10,8 @@ export interface Paginable<T> {
     totalPage: number;
   };
 }
+
+export interface FactoryState {
+  name: string;
+  execute: (amount: number) => Promise<void>;
+}

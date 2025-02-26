@@ -3,7 +3,7 @@ import { DB, Model } from "@shared/repositories";
 import { Paginable } from "@shared/models/types";
 
 export const ProductModelSchema = z.object({
-  id: z.number().optional(),
+  id: z.number().default(-1),
   barcode: z.string(),
   description: z.string(),
   costPrice: z.number(),
@@ -14,7 +14,7 @@ export const ProductModelSchema = z.object({
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   deletedAt: z.date().nullable(),
-  isActive: z.boolean().optional(),
+  isActive: z.boolean().default(true),
 });
 
 export type ProductPrimitive = z.infer<typeof ProductModelSchema>;

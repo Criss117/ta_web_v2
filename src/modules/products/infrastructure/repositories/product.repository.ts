@@ -3,6 +3,7 @@ import {
   ProductModel,
   type ProductPrimitive,
 } from "@products/domain/models/product.model";
+import { ProductsMapper } from "../mappers/products.mapper";
 
 export class ProductRepository {
   static instance: ProductRepository;
@@ -26,10 +27,9 @@ export class ProductRepository {
       throw new Error("El producto ya existe");
     }
 
-    delete product.id;
     product.createdAt = new Date();
 
-    return this.productModel.add(product);
+    return this.productModel.add(ProductsMapper.prepareToCreate(product));
   }
 
   public getAll() {
@@ -53,17 +53,24 @@ export class ProductRepository {
   }
 
   public async edit(id: number, product: ProductPrimitive) {
-    const existingProduct = await this.productModel.getByField(
-      "barcode",
-      product.barcode
-    );
+    const existingProduct = await this.productModel.getByField("id", id);
 
     if (!existingProduct) {
       throw new Error("El producto no existe");
     }
 
+    if (product.barcode !== existingProduct.barcode) {
+      const existingBarcode = await this.productModel.getByField(
+        "barcode",
+        product.barcode
+      );
+
+      if (existingBarcode) {
+        throw new Error("El codigo de barras ya está registrado");
+      }
+    }
+
     product.updatedAt = new Date();
-    delete product.id;
 
     return this.productModel.update(id, product);
   }
