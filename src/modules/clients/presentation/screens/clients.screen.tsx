@@ -7,19 +7,20 @@ import { cn } from "@/lib/utils";
 import { SectionLayout } from "@ui/section-layout";
 import { SectionHeader } from "@ui/section-header";
 import { Pagination } from "@shared/models/types";
-import type { Paginable } from "@shared/models/types";
-
-import { ProductsDataTable } from "@products/presentation/components/products-data-table";
-import { ProductPrimitive } from "@products/domain/product.model";
-import { useProducts } from "@products/application/hooks/use.products";
 import { TablePag } from "@/components/data-table/table-pag";
 import { SearchBarQuery } from "@/components/data-table/search-bar-query";
 
-export function ProductsScreen({ page, size, query }: Pagination) {
+import { useClients } from "@clients/application/hooks/use.clients";
+import { ClientsDataTable } from "@clients/presentation/components/clients-data-table";
+
+import type { ClientPrimitive } from "@clients/domain/client.model";
+import type { Paginable } from "@shared/models/types";
+
+export function ClientsScreen({ page, size, query }: Pagination) {
   const nav = useNavigate();
   const [isPending, startTransition] = useTransition();
-  const { getMany } = useProducts();
-  const [products, setProducts] = useState<Paginable<ProductPrimitive>>({
+  const { getMany } = useClients();
+  const [clients, setClients] = useState<Paginable<ClientPrimitive>>({
     items: [],
     count: {
       totalItems: 0,
@@ -29,7 +30,7 @@ export function ProductsScreen({ page, size, query }: Pagination) {
 
   const handleQuery = (querySearch: string) => {
     nav({
-      to: "/dashboard/products",
+      to: "/dashboard/clients",
       search: {
         page: 1,
         size,
@@ -42,7 +43,7 @@ export function ProductsScreen({ page, size, query }: Pagination) {
     startTransition(async () => {
       const data = await getMany(page - 1, size, query);
 
-      setProducts(data);
+      setClients(data);
     });
   };
 
@@ -54,12 +55,12 @@ export function ProductsScreen({ page, size, query }: Pagination) {
     <SectionLayout className="space-y-4">
       <SectionHeader>
         <SearchBarQuery
-          label="Buscar por descripción o código de barras"
+          label="Buscar por nombre o identificador"
           searchByQueryFn={handleQuery}
         />
         <div className="flex gap-2">
           <Button asChild>
-            <Link to="/dashboard/products/create">Crear un producto</Link>
+            <Link to="/dashboard/products/create">Crear un cliente</Link>
           </Button>
           <Button onClick={handleProducts} variant="outline">
             <RotateCcw className={cn(isPending && "animate-spin-reverse")} />
@@ -67,9 +68,9 @@ export function ProductsScreen({ page, size, query }: Pagination) {
         </div>
       </SectionHeader>
 
-      <TablePag page={page} size={size} count={products.count} />
-      <ProductsDataTable products={products} isPending={isPending} />
-      <TablePag page={page} size={size} count={products.count} />
+      <TablePag page={page} size={size} count={clients.count} />
+      <ClientsDataTable clients={clients} isPending={isPending} />
+      <TablePag page={page} size={size} count={clients.count} />
     </SectionLayout>
   );
 }

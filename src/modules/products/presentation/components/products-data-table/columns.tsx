@@ -5,7 +5,7 @@ import { format } from "@formkit/tempo";
 import { Button } from "@ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { DeleteProduct } from "../delete-product";
-import type { ProductPrimitive } from "@products/domain/models/product.model";
+import type { ProductPrimitive } from "@/modules/products/domain/product.model";
 
 export const columns: ColumnDef<ProductPrimitive>[] = [
   {

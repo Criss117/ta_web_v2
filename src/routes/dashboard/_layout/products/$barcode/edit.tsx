@@ -27,6 +27,13 @@ export const Route = createFileRoute(
       <EditProductSkeleton />
     </section>
   ),
+  head: ({ loaderData }) => ({
+    meta: [
+      {
+        title: `Ta Web | ${loaderData.description}`,
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {

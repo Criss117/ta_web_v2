@@ -1,7 +1,8 @@
 import type { Table, UpdateSpec } from "dexie";
+import { Paginable } from "../models/types";
 
 // Clase base genérica para modelos
-export class Model<T, K = number> {
+export abstract class Model<T, K = number> {
   private table: Table<T, K>;
 
   constructor(table: Table<T, K>) {
@@ -64,5 +65,33 @@ export class Model<T, K = number> {
     const updatedData = someChanges ? someChanges(data) : data;
 
     return this.table.update(id, updatedData);
+  }
+
+  async getPaginated(page: number, size: number): Promise<Paginable<T>> {
+    const countPromise = this.count();
+    const itemsPromise = this.table
+      .offset(page * size)
+      .limit(size)
+      .toArray();
+
+    const [count, items] = await Promise.all([countPromise, itemsPromise]);
+
+    return {
+      items,
+      count: {
+        totalItems: count,
+        totalPage: Math.ceil(count / size),
+      },
+    };
+  }
+
+  async getPaginatedAndQuery(
+    page: number,
+    size: number,
+    query: string
+  ): Promise<Paginable<T>> {
+    console.log(query);
+
+    return this.getPaginated(page, size);
   }
 }

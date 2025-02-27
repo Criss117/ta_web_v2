@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import ProductFormService from "../services/product-form.service";
 import type { MutationResponse, ProductFormDto } from "../schemas/types";
 import { ProductFormSchema } from "../schemas/product.schema";
-import type { ProductPrimitive } from "@products/domain/models/product.model";
+import type { ProductPrimitive } from "@/modules/products/domain/product.model";
 
 export function useProductForm(product?: ProductPrimitive) {
   const [responseStatus, setResponseStatus] = useState<MutationResponse | null>(

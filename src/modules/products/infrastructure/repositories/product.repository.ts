@@ -2,7 +2,7 @@ import type { Paginable } from "@shared/models/types";
 import {
   ProductModel,
   type ProductPrimitive,
-} from "@products/domain/models/product.model";
+} from "@products/domain/product.model";
 import { ProductsMapper } from "../mappers/products.mapper";
 
 export class ProductRepository {

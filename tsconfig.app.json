@@ -26,6 +26,7 @@
       "@/*": ["./src/*"],
       "@shared/*": ["./src/modules/shared/*"],
       "@products/*": ["./src/modules/products/*"],
+      "@clients/*": ["./src/modules/clients/*"],
       "@ui/*": ["./src/components/ui/*"],
       "@form/*": ["./src/components/form/*"]
     }

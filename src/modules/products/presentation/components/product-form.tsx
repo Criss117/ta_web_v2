@@ -10,7 +10,7 @@ import type {
   ProductFormDto,
 } from "@products/application/schemas/types";
 import { toast } from "sonner";
-import { ProductPrimitive } from "../../domain/models/product.model";
+import { ProductPrimitive } from "../../domain/product.model";
 
 const formItemsText = [
   {

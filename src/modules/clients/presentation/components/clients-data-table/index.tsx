@@ -1,18 +1,18 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-import { ProductPrimitive } from "@/modules/products/domain/product.model";
-import { columns } from "./columns";
 import { Paginable } from "@shared/models/types";
 import { DataTable } from "@/components/data-table";
+import { columns } from "./columns";
+import { type ClientPrimitive } from "@/modules/clients/domain/client.model";
 
 interface Props {
-  products: Paginable<ProductPrimitive>;
+  clients: Paginable<ClientPrimitive>;
   isPending?: boolean;
 }
 
-export function ProductsDataTable({ products, isPending }: Props) {
+export function ClientsDataTable({ clients, isPending }: Props) {
   const table = useReactTable({
-    data: products?.items || [],
+    data: clients?.items || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });

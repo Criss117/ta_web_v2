@@ -1,8 +1,5 @@
 import { FakerFacade } from "@shared/facades/faker.facade";
-import {
-  ProductModel,
-  ProductPrimitive,
-} from "@products/domain/models/product.model";
+import { ProductModel, ProductPrimitive } from "@products/domain/product.model";
 
 export class ProductFactory {
   static instance: ProductFactory;

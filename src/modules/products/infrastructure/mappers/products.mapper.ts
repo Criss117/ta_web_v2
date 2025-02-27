@@ -1,5 +1,5 @@
 import { ProductFormDto } from "@products/application/schemas/types";
-import { ProductPrimitive } from "@products/domain/models/product.model";
+import { ProductPrimitive } from "@/modules/products/domain/product.model";
 
 export class ProductsMapper {
   public static formToDomain(product: ProductFormDto): ProductPrimitive {

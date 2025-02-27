@@ -1,13 +1,16 @@
 import { TableCell, TableRow } from "@ui/table";
-import { columns } from "./columns";
 import { Skeleton } from "@ui/skeleton";
 
-export function TableBodySkeleton() {
+interface Props {
+  columnsLength: number;
+}
+
+export function TableBodySkeleton({ columnsLength }: Props) {
   return (
     <>
       {Array.from({ length: 10 }).map((_, index) => (
         <TableRow key={index}>
-          <TableCell colSpan={columns.length} className="h-[73px]">
+          <TableCell colSpan={columnsLength} className="h-[73px]">
             <Skeleton className="w-full h-full" />
           </TableCell>
         </TableRow>

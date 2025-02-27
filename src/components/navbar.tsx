@@ -1,4 +1,4 @@
-import { Package } from "lucide-react";
+import { BadgeDollarSign, Package, Users } from "lucide-react";
 import { Link, useLocation } from "@tanstack/react-router";
 
 import { Button } from "./ui/button";
@@ -6,20 +6,28 @@ import { Clock } from "./ui/clock";
 
 import { Route as dashRoute } from "@/routes/dashboard/_layout/index";
 import { Route as productsRoute } from "@/routes/dashboard/_layout/products";
+import { Route as clientsRoute } from "@/routes/dashboard/_layout/clients";
+
 import { DataBaseFactorySheet } from "./data-base-factory.sheet";
 
 const NAVITEMS = [
   {
     name: "Ventas",
     href: dashRoute.to,
-    Icon: Package,
+    Icon: BadgeDollarSign,
+  },
+  {
+    name: "Clientes",
+    href: clientsRoute.to,
+    Icon: Users,
   },
   {
     name: "Productos",
     href: productsRoute.to,
     Icon: Package,
   },
-];
+] as const;
+
 export function Navbar() {
   const { pathname } = useLocation();
 
