@@ -1,9 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import type { ClientPrimitive } from "@clients/domain/client.model";
 import { Link } from "@tanstack/react-router";
+
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import type { ClientPrimitive } from "@clients/domain/client.model";
+import { DeleteClient } from "@clients/presentation/components/delete-client";
 
 export const columns: ColumnDef<ClientPrimitive>[] = [
   {
@@ -41,7 +42,7 @@ export const columns: ColumnDef<ClientPrimitive>[] = [
 
       return (
         <div className="flex gap-2 z-50">
-          {/* <DeleteClient ccNumber={client.ccNumber} id={client.id} /> */}
+          <DeleteClient id={client.id} />
           <Link
             className={cn("w-1/2", buttonVariants({ variant: "outline" }))}
             to="/dashboard/clients/$identifier/edit"
