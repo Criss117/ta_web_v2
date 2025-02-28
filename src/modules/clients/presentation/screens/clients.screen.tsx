@@ -60,7 +60,7 @@ export function ClientsScreen({ page, size, query }: Pagination) {
         />
         <div className="flex gap-2">
           <Button asChild>
-            <Link to="/dashboard/products/create">Crear un cliente</Link>
+            <Link to="/dashboard/clients/create">Crear un cliente</Link>
           </Button>
           <Button onClick={handleProducts} variant="outline">
             <RotateCcw className={cn(isPending && "animate-spin-reverse")} />

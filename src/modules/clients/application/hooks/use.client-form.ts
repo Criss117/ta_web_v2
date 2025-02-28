@@ -4,47 +4,38 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-import ProductFormService from "../services/product-form.service";
-import type { ProductFormDto } from "../schemas/types";
-import { ProductFormSchema } from "../schemas/product.schema";
-import type { ProductPrimitive } from "@products/domain/product.model";
+import type { ClientPrimitive } from "@clients/domain/client.model";
+import type { ClientFormDto } from "@/modules/clients/domain/schemas/types";
 import { MutationResponse } from "@shared/models/types";
+import { ClientFormSchema } from "@/modules/clients/domain/schemas/client.schema";
 
-export function useProductForm(product?: ProductPrimitive) {
+export function useClientForm(client?: ClientPrimitive) {
   const [responseStatus, setResponseStatus] = useState<MutationResponse | null>(
     null
   );
 
   const nav = useNavigate();
 
-  const form = useForm<ProductFormDto>({
-    resolver: zodResolver(ProductFormSchema),
-    defaultValues: product && { ...product },
+  const form = useForm<ClientFormDto>({
+    resolver: zodResolver(ClientFormSchema),
+    defaultValues: client && { ...client },
   });
 
   const onSubmit = async (
-    data: ProductFormDto,
-    mutationFn: (product: ProductFormDto) => Promise<MutationResponse>
+    data: ClientFormDto,
+    mutationFn: (
+      client: ClientFormDto,
+      id?: number
+    ) => Promise<MutationResponse>
   ) => {
     form.clearErrors();
-    const errosValidations = ProductFormService.validate(data);
 
-    if (errosValidations.length > 0) {
-      errosValidations.map((error) => {
-        form.setError(error.field, {
-          message: error.message,
-        });
-      });
-
-      return;
-    }
-
-    await mutationFn(data)
+    await mutationFn(data, client?.id)
       .then((res) => {
         form.reset();
         setResponseStatus(res);
         nav({
-          to: "/dashboard/products",
+          to: "/dashboard/clients",
           search: {
             page: 1,
             size: 20,

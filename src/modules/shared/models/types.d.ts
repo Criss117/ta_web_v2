@@ -11,6 +11,11 @@ export interface Paginable<T> {
   };
 }
 
+export type MutationResponse = {
+  success: boolean;
+  error: string | null;
+};
+
 export interface FactoryState {
   name: string;
   execute: (amount: number) => Promise<void>;

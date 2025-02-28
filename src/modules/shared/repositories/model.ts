@@ -45,7 +45,7 @@ export abstract class Model<T, K = number> {
       throw new Error("No se ha actualizado");
     }
 
-    return this.table.get(id);
+    return updated;
   }
 
   async count() {

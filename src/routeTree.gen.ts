@@ -26,6 +26,9 @@ const DashboardImport = createFileRoute('/dashboard')()
 const DashboardLayoutProductsCreateLazyImport = createFileRoute(
   '/dashboard/_layout/products/create',
 )()
+const DashboardLayoutClientsCreateLazyImport = createFileRoute(
+  '/dashboard/_layout/clients/create',
+)()
 
 // Create/Update Routes
 
@@ -71,6 +74,17 @@ const DashboardLayoutProductsCreateLazyRoute =
     ),
   )
 
+const DashboardLayoutClientsCreateLazyRoute =
+  DashboardLayoutClientsCreateLazyImport.update({
+    id: '/clients/create',
+    path: '/clients/create',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/_layout/clients/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 const DashboardLayoutProductsBarcodeEditRoute =
   DashboardLayoutProductsBarcodeEditImport.update({
     id: '/products/$barcode/edit',
@@ -108,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardLayoutIndexImport
+      parentRoute: typeof DashboardLayoutImport
+    }
+    '/dashboard/_layout/clients/create': {
+      id: '/dashboard/_layout/clients/create'
+      path: '/clients/create'
+      fullPath: '/dashboard/clients/create'
+      preLoaderRoute: typeof DashboardLayoutClientsCreateLazyImport
       parentRoute: typeof DashboardLayoutImport
     }
     '/dashboard/_layout/products/create': {
@@ -152,6 +173,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardLayoutRouteChildren {
   DashboardLayoutIndexRoute: typeof DashboardLayoutIndexRoute
+  DashboardLayoutClientsCreateLazyRoute: typeof DashboardLayoutClientsCreateLazyRoute
   DashboardLayoutProductsCreateLazyRoute: typeof DashboardLayoutProductsCreateLazyRoute
   DashboardLayoutClientsIndexRoute: typeof DashboardLayoutClientsIndexRoute
   DashboardLayoutProductsIndexRoute: typeof DashboardLayoutProductsIndexRoute
@@ -161,6 +183,7 @@ interface DashboardLayoutRouteChildren {
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
   DashboardLayoutIndexRoute: DashboardLayoutIndexRoute,
+  DashboardLayoutClientsCreateLazyRoute: DashboardLayoutClientsCreateLazyRoute,
   DashboardLayoutProductsCreateLazyRoute:
     DashboardLayoutProductsCreateLazyRoute,
   DashboardLayoutClientsIndexRoute: DashboardLayoutClientsIndexRoute,
@@ -190,6 +213,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/dashboard/': typeof DashboardLayoutIndexRoute
+  '/dashboard/clients/create': typeof DashboardLayoutClientsCreateLazyRoute
   '/dashboard/products/create': typeof DashboardLayoutProductsCreateLazyRoute
   '/dashboard/clients': typeof DashboardLayoutClientsIndexRoute
   '/dashboard/products': typeof DashboardLayoutProductsIndexRoute
@@ -199,6 +223,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/dashboard': typeof DashboardLayoutIndexRoute
+  '/dashboard/clients/create': typeof DashboardLayoutClientsCreateLazyRoute
   '/dashboard/products/create': typeof DashboardLayoutProductsCreateLazyRoute
   '/dashboard/clients': typeof DashboardLayoutClientsIndexRoute
   '/dashboard/products': typeof DashboardLayoutProductsIndexRoute
@@ -211,6 +236,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/_layout': typeof DashboardLayoutRouteWithChildren
   '/dashboard/_layout/': typeof DashboardLayoutIndexRoute
+  '/dashboard/_layout/clients/create': typeof DashboardLayoutClientsCreateLazyRoute
   '/dashboard/_layout/products/create': typeof DashboardLayoutProductsCreateLazyRoute
   '/dashboard/_layout/clients/': typeof DashboardLayoutClientsIndexRoute
   '/dashboard/_layout/products/': typeof DashboardLayoutProductsIndexRoute
@@ -223,6 +249,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/dashboard'
     | '/dashboard/'
+    | '/dashboard/clients/create'
     | '/dashboard/products/create'
     | '/dashboard/clients'
     | '/dashboard/products'
@@ -231,6 +258,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/dashboard'
+    | '/dashboard/clients/create'
     | '/dashboard/products/create'
     | '/dashboard/clients'
     | '/dashboard/products'
@@ -241,6 +269,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/_layout'
     | '/dashboard/_layout/'
+    | '/dashboard/_layout/clients/create'
     | '/dashboard/_layout/products/create'
     | '/dashboard/_layout/clients/'
     | '/dashboard/_layout/products/'
@@ -281,6 +310,7 @@ export const routeTree = rootRoute
       "parent": "/dashboard",
       "children": [
         "/dashboard/_layout/",
+        "/dashboard/_layout/clients/create",
         "/dashboard/_layout/products/create",
         "/dashboard/_layout/clients/",
         "/dashboard/_layout/products/",
@@ -290,6 +320,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/_layout/": {
       "filePath": "dashboard/_layout/index.tsx",
+      "parent": "/dashboard/_layout"
+    },
+    "/dashboard/_layout/clients/create": {
+      "filePath": "dashboard/_layout/clients/create.lazy.tsx",
       "parent": "/dashboard/_layout"
     },
     "/dashboard/_layout/products/create": {

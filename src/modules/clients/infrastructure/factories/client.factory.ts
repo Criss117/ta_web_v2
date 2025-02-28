@@ -25,7 +25,9 @@ export class ClientFactory {
         identifier: faker.commerce.isbn({ separator: "" }),
         fullName: faker.person.fullName(),
         address: faker.location.streetAddress(),
-        phone: faker.phone.number(),
+        phone: faker.number
+          .bigInt({ min: 1000000000, max: 9999999999 })
+          .toString(),
         creditLimit: Number(faker.commerce.price()),
         balance: Number(faker.commerce.price()),
         createdAt: faker.date.recent(),

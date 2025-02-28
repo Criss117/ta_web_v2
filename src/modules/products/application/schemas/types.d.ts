@@ -6,8 +6,3 @@ export type ProductFormDto = z.infer<typeof ProductFormSchema> & {
 };
 
 export type EditProductDto = z.infer<typeof EditProductFormSchema>;
-
-export type MutationResponse = {
-  success: boolean;
-  error: string | null;
-};

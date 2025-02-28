@@ -2,9 +2,10 @@ import { CreateProductUseCase } from "@products/application/usecases/create-prod
 import { GetAllProductsUseCase } from "@products/application/usecases/get-all-products.usecase";
 import { UpdateProductUseCase } from "@products/application/usecases/update-product.usecase";
 
-import type { MutationResponse, ProductFormDto } from "../schemas/types";
 import { GetOneByUseCase } from "../usecases/get-one-by.usecase";
 import { DeleteProductUseCase } from "../usecases/delete-product.usecase";
+import type { ProductFormDto } from "../schemas/types";
+import type { MutationResponse } from "@shared/models/types";
 
 export function useProducts() {
   const create = async (product: ProductFormDto): Promise<MutationResponse> => {
