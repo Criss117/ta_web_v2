@@ -1,24 +1,9 @@
-import { ProductFormDto } from "@products/application/schemas/types";
-import { ProductPrimitive } from "@/modules/products/domain/product.model";
+import type { ProductPrimitive } from "@products/domain/product.model";
+import type { ProductFormDto } from "@products/domain/schemas/types";
 
 export class ProductsMapper {
-  public static formToDomain(product: ProductFormDto): ProductPrimitive {
-    return {
-      id: product.id || -1,
-      barcode: product.barcode,
-      description: product.description,
-      costPrice: product.costPrice,
-      salePrice: product.salePrice,
-      wholesalePrice: product.wholesalePrice,
-      stock: product.stock,
-      minStock: product.minStock,
-      deletedAt: null,
-      isActive: true,
-    };
-  }
-
   public static prepareToCreate(
-    product: ProductPrimitive
+    product: ProductFormDto
   ): Omit<ProductPrimitive, "id"> {
     return {
       barcode: product.barcode,
@@ -28,10 +13,30 @@ export class ProductsMapper {
       wholesalePrice: product.wholesalePrice,
       stock: product.stock,
       minStock: product.minStock,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-      deletedAt: product.deletedAt,
-      isActive: product.isActive,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+      isActive: true,
+    };
+  }
+
+  public static prepareToUpdate(
+    oldData: ProductPrimitive,
+    newData: ProductFormDto
+  ): ProductPrimitive {
+    return {
+      id: oldData.id,
+      barcode: newData.barcode,
+      description: newData.description,
+      costPrice: newData.costPrice,
+      salePrice: newData.salePrice,
+      wholesalePrice: newData.wholesalePrice,
+      stock: newData.stock,
+      minStock: newData.minStock,
+      createdAt: oldData.createdAt,
+      updatedAt: new Date(),
+      deletedAt: null,
+      isActive: true,
     };
   }
 }

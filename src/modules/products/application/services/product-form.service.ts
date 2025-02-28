@@ -1,7 +1,7 @@
 import { z } from "zod";
-import type { ProductFormDto } from "../schemas/types";
+import type { ProductFormDto } from "@products/domain/schemas/types";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.message";
-import { ProductFormSchema } from "../schemas/product.schema";
+import { ProductFormSchema } from "@products/domain/schemas/product.schema";
 
 type ClientError = {
   error: boolean;
@@ -9,7 +9,7 @@ type ClientError = {
   field: keyof ProductFormDto;
 };
 
-class ProductFormService {
+export class ProductFormService {
   static validateStock(
     stock: number,
     minStock: number
@@ -73,5 +73,3 @@ class ProductFormService {
     return error;
   }
 }
-
-export default ProductFormService;

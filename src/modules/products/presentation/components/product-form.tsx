@@ -5,7 +5,7 @@ import { Form, FormField } from "@ui/form";
 import { FormItemInput } from "@form/form-item-input";
 
 import { useProductForm } from "@products/application/hooks/use.product-form";
-import type { ProductFormDto } from "@products/application/schemas/types";
+import type { ProductFormDto } from "@/modules/products/domain/schemas/types";
 import { toast } from "sonner";
 import { ProductPrimitive } from "@products/domain/product.model";
 import { MutationResponse } from "@shared/models/types";

@@ -1,6 +1,5 @@
 import { ProductRepository } from "@products/infrastructure/repositories/product.repository";
-import { ProductsMapper } from "@products/infrastructure/mappers/products.mapper";
-import type { ProductFormDto } from "../schemas/types";
+import type { ProductFormDto } from "@products/domain/schemas/types";
 
 export class CreateProductUseCase {
   static instance: CreateProductUseCase;
@@ -15,8 +14,6 @@ export class CreateProductUseCase {
   }
 
   public async execute(product: ProductFormDto) {
-    const productMapped = ProductsMapper.formToDomain(product);
-
-    return this.repository.create(productMapped);
+    return this.repository.create(product);
   }
 }

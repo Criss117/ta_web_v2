@@ -1,7 +1,16 @@
 import { z } from "zod";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.message";
+import { ProductModelSchema } from "../product.model";
 
-export const ProductFormSchema = z.object({
+export const ProductFormSchema = ProductModelSchema.pick({
+  barcode: true,
+  description: true,
+  costPrice: true,
+  salePrice: true,
+  wholesalePrice: true,
+  stock: true,
+  minStock: true,
+}).extend({
   barcode: z
     .string({
       required_error: PRODUCT_FORM_MESSAGES.BARCODE.REQUIRED,
@@ -72,12 +81,4 @@ export const ProductFormSchema = z.object({
         message: PRODUCT_FORM_MESSAGES.MINSTOCK.MIN,
       })
   ),
-});
-
-export const EditProductFormSchema = ProductFormSchema.extend({
-  id: z.string(),
-});
-
-export const ProductSearchSchema = z.object({
-  barcode: z.string().min(1),
 });

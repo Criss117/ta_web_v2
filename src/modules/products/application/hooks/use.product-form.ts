@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-import ProductFormService from "../services/product-form.service";
-import type { ProductFormDto } from "../schemas/types";
-import { ProductFormSchema } from "../schemas/product.schema";
+import { ProductFormService } from "@products/application/services/product-form.service";
+import { ProductFormSchema } from "@products/domain/schemas/product.schema";
+
+import type { MutationResponse } from "@shared/models/types";
 import type { ProductPrimitive } from "@products/domain/product.model";
-import { MutationResponse } from "@shared/models/types";
+import type { ProductFormDto } from "@products/domain/schemas/types";
 
 export function useProductForm(product?: ProductPrimitive) {
   const [responseStatus, setResponseStatus] = useState<MutationResponse | null>(
@@ -24,7 +25,10 @@ export function useProductForm(product?: ProductPrimitive) {
 
   const onSubmit = async (
     data: ProductFormDto,
-    mutationFn: (product: ProductFormDto) => Promise<MutationResponse>
+    mutationFn: (
+      product: ProductFormDto,
+      id?: number
+    ) => Promise<MutationResponse>
   ) => {
     form.clearErrors();
     const errosValidations = ProductFormService.validate(data);

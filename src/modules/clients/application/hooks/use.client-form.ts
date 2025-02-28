@@ -23,14 +23,11 @@ export function useClientForm(client?: ClientPrimitive) {
 
   const onSubmit = async (
     data: ClientFormDto,
-    mutationFn: (
-      client: ClientFormDto,
-      id?: number
-    ) => Promise<MutationResponse>
+    mutationFn: (client: ClientFormDto) => Promise<MutationResponse>
   ) => {
     form.clearErrors();
 
-    await mutationFn(data, client?.id)
+    await mutationFn(data)
       .then((res) => {
         form.reset();
         setResponseStatus(res);

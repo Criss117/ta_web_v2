@@ -3,7 +3,8 @@ import {
   ProductModel,
   type ProductPrimitive,
 } from "@products/domain/product.model";
-import { ProductsMapper } from "../mappers/products.mapper";
+import { ProductsMapper } from "@products/infrastructure/mappers/products.mapper";
+import type { ProductFormDto } from "@products/domain/schemas/types";
 
 export class ProductRepository {
   static instance: ProductRepository;
@@ -17,7 +18,7 @@ export class ProductRepository {
     return this.instance;
   }
 
-  public async create(product: ProductPrimitive) {
+  public async create(product: ProductFormDto) {
     const existingProduct = await this.productModel.getByField(
       "barcode",
       product.barcode
@@ -27,13 +28,7 @@ export class ProductRepository {
       throw new Error("El producto ya existe");
     }
 
-    product.createdAt = new Date();
-
     return this.productModel.add(ProductsMapper.prepareToCreate(product));
-  }
-
-  public getAll() {
-    return this.productModel.getAll();
   }
 
   public async getByBarcode(barcode: string) {
@@ -52,7 +47,7 @@ export class ProductRepository {
     return this.productModel.getPaginated(page, size);
   }
 
-  public async edit(id: number, product: ProductPrimitive) {
+  public async update(id: number, product: ProductFormDto) {
     const existingProduct = await this.productModel.getByField("id", id);
 
     if (!existingProduct) {
@@ -70,9 +65,12 @@ export class ProductRepository {
       }
     }
 
-    product.updatedAt = new Date();
+    const updatedProduct = ProductsMapper.prepareToUpdate(
+      existingProduct,
+      product
+    );
 
-    return this.productModel.update(id, product);
+    return this.productModel.update(id, updatedProduct);
   }
 
   public delete(id: number) {
