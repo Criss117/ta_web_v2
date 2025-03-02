@@ -57,6 +57,7 @@ export function ClientsScreen({ page, size, query }: Pagination) {
         <SearchBarQuery
           label="Buscar por nombre o identificador"
           searchByQueryFn={handleQuery}
+          defaultValue={query || ""}
         />
         <div className="flex gap-2">
           <Button asChild>

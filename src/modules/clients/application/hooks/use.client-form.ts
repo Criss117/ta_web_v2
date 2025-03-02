@@ -5,9 +5,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import type { ClientPrimitive } from "@clients/domain/client.model";
-import type { ClientFormDto } from "@/modules/clients/domain/schemas/types";
+import type { ClientFormDto } from "@clients/domain/schemas/types";
+import { ClientFormSchema } from "@clients/domain/schemas/client.schema";
 import { MutationResponse } from "@shared/models/types";
-import { ClientFormSchema } from "@/modules/clients/domain/schemas/client.schema";
 
 export function useClientForm(client?: ClientPrimitive) {
   const [responseStatus, setResponseStatus] = useState<MutationResponse | null>(

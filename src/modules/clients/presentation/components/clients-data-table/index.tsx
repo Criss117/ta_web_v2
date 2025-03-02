@@ -22,6 +22,10 @@ export function ClientsDataTable({ clients, isPending }: Props) {
       isPending={isPending || false}
       table={table}
       columnsLength={columns.length}
+      navigateTo={{
+        to: "/dashboard/clients/$identifier",
+        objectName: "identifier",
+      }}
     />
   );
 }

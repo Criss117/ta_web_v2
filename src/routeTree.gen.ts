@@ -17,6 +17,7 @@ import { Route as DashboardLayoutImport } from './routes/dashboard/_layout'
 import { Route as DashboardLayoutIndexImport } from './routes/dashboard/_layout/index'
 import { Route as DashboardLayoutProductsIndexImport } from './routes/dashboard/_layout/products/index'
 import { Route as DashboardLayoutClientsIndexImport } from './routes/dashboard/_layout/clients/index'
+import { Route as DashboardLayoutClientsIdentifierIndexImport } from './routes/dashboard/_layout/clients/$identifier/index'
 import { Route as DashboardLayoutProductsBarcodeEditImport } from './routes/dashboard/_layout/products/$barcode/edit'
 import { Route as DashboardLayoutClientsIdentifierEditImport } from './routes/dashboard/_layout/clients/$identifier/edit'
 
@@ -84,6 +85,13 @@ const DashboardLayoutClientsCreateLazyRoute =
       (d) => d.Route,
     ),
   )
+
+const DashboardLayoutClientsIdentifierIndexRoute =
+  DashboardLayoutClientsIdentifierIndexImport.update({
+    id: '/clients/$identifier/',
+    path: '/clients/$identifier/',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
 
 const DashboardLayoutProductsBarcodeEditRoute =
   DashboardLayoutProductsBarcodeEditImport.update({
@@ -166,6 +174,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutProductsBarcodeEditImport
       parentRoute: typeof DashboardLayoutImport
     }
+    '/dashboard/_layout/clients/$identifier/': {
+      id: '/dashboard/_layout/clients/$identifier/'
+      path: '/clients/$identifier'
+      fullPath: '/dashboard/clients/$identifier'
+      preLoaderRoute: typeof DashboardLayoutClientsIdentifierIndexImport
+      parentRoute: typeof DashboardLayoutImport
+    }
   }
 }
 
@@ -179,6 +194,7 @@ interface DashboardLayoutRouteChildren {
   DashboardLayoutProductsIndexRoute: typeof DashboardLayoutProductsIndexRoute
   DashboardLayoutClientsIdentifierEditRoute: typeof DashboardLayoutClientsIdentifierEditRoute
   DashboardLayoutProductsBarcodeEditRoute: typeof DashboardLayoutProductsBarcodeEditRoute
+  DashboardLayoutClientsIdentifierIndexRoute: typeof DashboardLayoutClientsIdentifierIndexRoute
 }
 
 const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
@@ -192,6 +208,8 @@ const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
     DashboardLayoutClientsIdentifierEditRoute,
   DashboardLayoutProductsBarcodeEditRoute:
     DashboardLayoutProductsBarcodeEditRoute,
+  DashboardLayoutClientsIdentifierIndexRoute:
+    DashboardLayoutClientsIdentifierIndexRoute,
 }
 
 const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
@@ -219,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/products': typeof DashboardLayoutProductsIndexRoute
   '/dashboard/clients/$identifier/edit': typeof DashboardLayoutClientsIdentifierEditRoute
   '/dashboard/products/$barcode/edit': typeof DashboardLayoutProductsBarcodeEditRoute
+  '/dashboard/clients/$identifier': typeof DashboardLayoutClientsIdentifierIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -229,6 +248,7 @@ export interface FileRoutesByTo {
   '/dashboard/products': typeof DashboardLayoutProductsIndexRoute
   '/dashboard/clients/$identifier/edit': typeof DashboardLayoutClientsIdentifierEditRoute
   '/dashboard/products/$barcode/edit': typeof DashboardLayoutProductsBarcodeEditRoute
+  '/dashboard/clients/$identifier': typeof DashboardLayoutClientsIdentifierIndexRoute
 }
 
 export interface FileRoutesById {
@@ -242,6 +262,7 @@ export interface FileRoutesById {
   '/dashboard/_layout/products/': typeof DashboardLayoutProductsIndexRoute
   '/dashboard/_layout/clients/$identifier/edit': typeof DashboardLayoutClientsIdentifierEditRoute
   '/dashboard/_layout/products/$barcode/edit': typeof DashboardLayoutProductsBarcodeEditRoute
+  '/dashboard/_layout/clients/$identifier/': typeof DashboardLayoutClientsIdentifierIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -255,6 +276,7 @@ export interface FileRouteTypes {
     | '/dashboard/products'
     | '/dashboard/clients/$identifier/edit'
     | '/dashboard/products/$barcode/edit'
+    | '/dashboard/clients/$identifier'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/dashboard'
@@ -264,6 +286,7 @@ export interface FileRouteTypes {
     | '/dashboard/products'
     | '/dashboard/clients/$identifier/edit'
     | '/dashboard/products/$barcode/edit'
+    | '/dashboard/clients/$identifier'
   id:
     | '__root__'
     | '/dashboard'
@@ -275,6 +298,7 @@ export interface FileRouteTypes {
     | '/dashboard/_layout/products/'
     | '/dashboard/_layout/clients/$identifier/edit'
     | '/dashboard/_layout/products/$barcode/edit'
+    | '/dashboard/_layout/clients/$identifier/'
   fileRoutesById: FileRoutesById
 }
 
@@ -315,7 +339,8 @@ export const routeTree = rootRoute
         "/dashboard/_layout/clients/",
         "/dashboard/_layout/products/",
         "/dashboard/_layout/clients/$identifier/edit",
-        "/dashboard/_layout/products/$barcode/edit"
+        "/dashboard/_layout/products/$barcode/edit",
+        "/dashboard/_layout/clients/$identifier/"
       ]
     },
     "/dashboard/_layout/": {
@@ -344,6 +369,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/_layout/products/$barcode/edit": {
       "filePath": "dashboard/_layout/products/$barcode/edit.tsx",
+      "parent": "/dashboard/_layout"
+    },
+    "/dashboard/_layout/clients/$identifier/": {
+      "filePath": "dashboard/_layout/clients/$identifier/index.tsx",
       "parent": "/dashboard/_layout"
     }
   }

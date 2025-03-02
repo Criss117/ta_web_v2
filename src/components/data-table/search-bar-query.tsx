@@ -9,11 +9,16 @@ import { useDebounce } from "@shared/hooks/use.debounce";
 
 interface Props {
   label: string;
+  defaultValue?: string;
   searchByQueryFn?: (query: string) => void;
 }
 
-export const SearchBarQuery = ({ label, searchByQueryFn }: Props) => {
-  const [query, setQuery] = useState("");
+export const SearchBarQuery = ({
+  label,
+  defaultValue,
+  searchByQueryFn,
+}: Props) => {
+  const [query, setQuery] = useState(defaultValue || "");
   const queryDebaunce = useDebounce(query, 500);
 
   useEffect(() => {

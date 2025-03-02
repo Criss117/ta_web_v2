@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { flexRender, type Table as ITable } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
 import {
@@ -14,9 +15,20 @@ interface Props<T> {
   isPending: boolean;
   columnsLength: number;
   table: ITable<T>;
+  navigateTo?: {
+    to: string;
+    objectName: string;
+  };
 }
 
-export function DataTable<T>({ table, isPending, columnsLength }: Props<T>) {
+export function DataTable<T>({
+  table,
+  isPending,
+  columnsLength,
+  navigateTo,
+}: Props<T>) {
+  const nav = useNavigate();
+
   const rows = table.getRowModel().rows;
   return (
     <Table className="w-full">
@@ -44,9 +56,20 @@ export function DataTable<T>({ table, isPending, columnsLength }: Props<T>) {
               key={row.id}
               data-state={row.getIsSelected() && "selected"}
               className={cn(
-                "hover:bg-light-accent-100/20 text-center"
-                // navigateTo && "cursor-pointer"
+                "hover:bg-light-accent-100/20 text-center",
+                navigateTo && "cursor-pointer"
               )}
+              onClick={() => {
+                if (!navigateTo || !navigateTo.objectName) return;
+                const data = row.original[navigateTo.objectName as keyof T];
+
+                nav({
+                  to: navigateTo.to,
+                  params: {
+                    [navigateTo.objectName]: data,
+                  },
+                });
+              }}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="h-16">

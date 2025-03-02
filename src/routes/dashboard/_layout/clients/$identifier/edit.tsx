@@ -24,7 +24,7 @@ export const Route = createFileRoute(
   head: ({ loaderData }) => ({
     meta: [
       {
-        title: `Ta Web | ${loaderData.fullName}`,
+        title: `Ta Web | ${loaderData.fullName} | Edición`,
       },
     ],
   }),
