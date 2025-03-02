@@ -11,13 +11,14 @@ import {
 import type { Pagination } from "@shared/models/types";
 
 interface Props extends Pagination {
+  to: "/dashboard/products" | "/dashboard/clients";
   count: {
     totalItems: number;
     totalPage: number;
   };
 }
 
-export const TablePag = ({ page, size, count }: Props) => {
+export const TablePag = ({ page, size, count, to }: Props) => {
   const { totalPage } = count;
 
   const prevPage = page > 1 ? page - 1 : 1;
@@ -41,7 +42,7 @@ export const TablePag = ({ page, size, count }: Props) => {
       <div>
         {/* {first page */}
         <Link
-          to="/dashboard/products"
+          to={to}
           search={{
             page: 1,
             size,
@@ -59,7 +60,7 @@ export const TablePag = ({ page, size, count }: Props) => {
 
         {/* previous page */}
         <Link
-          to="/dashboard/products"
+          to={to}
           search={{
             page: prevPage,
             size,
@@ -77,7 +78,7 @@ export const TablePag = ({ page, size, count }: Props) => {
 
         {/* next page */}
         <Link
-          to="/dashboard/products"
+          to={to}
           search={{
             page: nextPage,
             size,
@@ -95,7 +96,7 @@ export const TablePag = ({ page, size, count }: Props) => {
 
         {/* last page */}
         <Link
-          to="/dashboard/products"
+          to={to}
           search={{
             page: totalPage,
             size,

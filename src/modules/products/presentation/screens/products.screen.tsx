@@ -67,9 +67,19 @@ export function ProductsScreen({ page, size, query }: Pagination) {
         </div>
       </SectionHeader>
 
-      <TablePag page={page} size={size} count={products.count} />
+      <TablePag
+        page={page}
+        size={size}
+        count={products.count}
+        to="/dashboard/products"
+      />
       <ProductsDataTable products={products} isPending={isPending} />
-      <TablePag page={page} size={size} count={products.count} />
+      <TablePag
+        page={page}
+        size={size}
+        count={products.count}
+        to="/dashboard/products"
+      />
     </SectionLayout>
   );
 }

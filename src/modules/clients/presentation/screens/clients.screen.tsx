@@ -69,9 +69,19 @@ export function ClientsScreen({ page, size, query }: Pagination) {
         </div>
       </SectionHeader>
 
-      <TablePag page={page} size={size} count={clients.count} />
+      <TablePag
+        page={page}
+        size={size}
+        count={clients.count}
+        to="/dashboard/clients"
+      />
       <ClientsDataTable clients={clients} isPending={isPending} />
-      <TablePag page={page} size={size} count={clients.count} />
+      <TablePag
+        page={page}
+        size={size}
+        count={clients.count}
+        to="/dashboard/clients"
+      />
     </SectionLayout>
   );
 }
