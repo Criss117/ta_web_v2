@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <>
       <Navbar />
-      <main className="mt-32">
+      <main className="pt-32">
         <Outlet />
       </main>
     </>
