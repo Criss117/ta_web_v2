@@ -12,20 +12,22 @@ import {
 import { TableBodySkeleton } from "./table-body-skeleton";
 
 interface Props<T> {
-  isPending: boolean;
+  isPending?: boolean;
   columnsLength: number;
   table: ITable<T>;
   navigateTo?: {
     to: string;
     objectName: string;
   };
+  fallbackLabel?: string;
 }
 
 export function DataTable<T>({
   table,
-  isPending,
+  isPending = false,
   columnsLength,
   navigateTo,
+  fallbackLabel,
 }: Props<T>) {
   const nav = useNavigate();
 
@@ -82,7 +84,7 @@ export function DataTable<T>({
         {!isPending && rows?.length === 0 && (
           <TableRow>
             <TableCell colSpan={columnsLength} className="h-24 text-center">
-              No hay productos
+              {fallbackLabel ?? "No hay Items"}
             </TableCell>
           </TableRow>
         )}

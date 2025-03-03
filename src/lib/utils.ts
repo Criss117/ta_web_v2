@@ -22,3 +22,33 @@ export function formatCurrency(
     amount
   );
 }
+
+export function validateStock(data: {
+  newQuantity: number;
+  currentStock: number;
+  totalStock: number;
+}): {
+  quantity: number;
+  currentStock: number;
+} {
+  const { newQuantity, currentStock, totalStock } = data;
+
+  if (newQuantity <= 0) {
+    return {
+      quantity: 1,
+      currentStock: currentStock,
+    };
+  }
+
+  if (newQuantity > totalStock) {
+    return {
+      quantity: totalStock,
+      currentStock: 0,
+    };
+  }
+
+  return {
+    quantity: newQuantity,
+    currentStock: totalStock - newQuantity,
+  };
+}

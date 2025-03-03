@@ -44,18 +44,18 @@ export class TicketDetailsFactory {
         const ticket = faker.helpers.arrayElement(tickets);
         const product = faker.helpers.arrayElement(products);
 
-        const amount = faker.number.int({ min: 1, max: 100 });
+        const quantity = faker.number.int({ min: 1, max: 100 });
         const subTotal = product.salePrice * ticket.total;
         return {
           id: i + 1,
           ticketId: ticket.id,
           barcode: product.barcode,
           description: product.description,
-          price: product.salePrice,
-          amount: amount,
+          salePrice: product.salePrice,
           subTotal: subTotal,
           createdAt: faker.date.recent(),
           updatedAt: faker.date.recent(),
+          quantity: quantity,
           deletedAt: null,
           isActive: true,
         };

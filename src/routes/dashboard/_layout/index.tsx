@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SectionTitle } from "@ui/section-title";
+import { TicketsScreen } from "@tickets/presentation/screen/tickets.screen";
 
 export const Route = createFileRoute("/dashboard/_layout/")({
   component: RouteComponent,
@@ -13,9 +13,5 @@ export const Route = createFileRoute("/dashboard/_layout/")({
 });
 
 function RouteComponent() {
-  return (
-    <>
-      <SectionTitle>Ventas</SectionTitle>
-    </>
-  );
+  return <TicketsScreen />;
 }

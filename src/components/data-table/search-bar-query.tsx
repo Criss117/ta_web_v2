@@ -6,9 +6,11 @@ import { Input } from "@ui/input";
 import { Label } from "@ui/label";
 import { Button } from "@ui/button";
 import { useDebounce } from "@shared/hooks/use.debounce";
+import { cn } from "@/lib/utils";
 
 interface Props {
   label: string;
+  labelClass?: string;
   defaultValue?: string;
   searchByQueryFn?: (query: string) => void;
 }
@@ -16,11 +18,15 @@ interface Props {
 export const SearchBarQuery = ({
   label,
   defaultValue,
+  labelClass,
   searchByQueryFn,
 }: Props) => {
   const [query, setQuery] = useState(defaultValue || "");
   const queryDebaunce = useDebounce(query, 500);
 
+  const clearQuery = () => {
+    setQuery("");
+  };
   useEffect(() => {
     if (!searchByQueryFn) return;
     if (queryDebaunce.length >= 3 || queryDebaunce.length === 0) {
@@ -29,13 +35,11 @@ export const SearchBarQuery = ({
     }
   }, [queryDebaunce]);
 
-  const clearQuery = () => {
-    setQuery("");
-  };
-
   return (
     <div className="grid w-full max-w-xl items-center gap-1.5 relative">
-      <Label htmlFor="query">{label}</Label>
+      <Label htmlFor="query" className={cn(labelClass)}>
+        {label}
+      </Label>
       <Input
         type="text"
         id="query"
