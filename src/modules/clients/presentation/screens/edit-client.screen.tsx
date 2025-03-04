@@ -3,7 +3,7 @@ import { SectionHeader } from "@ui/section-header";
 import { SectionLayout } from "@ui/section-layout";
 import { useClients } from "@clients/application/hooks/use.clients";
 import { ClientForm } from "@clients/presentation/components/client-form";
-import type { ClientPrimitive } from "@clients/domain/client.model";
+import type { ClientPrimitive } from "@clients/domain/types";
 
 interface Props {
   client: ClientPrimitive;

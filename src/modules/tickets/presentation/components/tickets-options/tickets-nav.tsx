@@ -1,26 +1,21 @@
 import { PlusCircle } from "lucide-react";
-import { useStore } from "zustand";
 import { Button } from "@ui/button";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuTrigger,
 } from "@ui/context-menu";
-import { ticketsStore } from "@tickets/application/store/tickets.store";
+import { useTicketsStore } from "@tickets/application/store/tickets.store";
 import { TicketMenuOption } from "./ticket-menu-option";
 
 export function TicketsNav() {
-  const ticketsOnStore = useStore(ticketsStore, (state) => state.tickets);
+  const ticketsOnStore = useTicketsStore((state) => state.tickets);
+  const currentTicketId = useTicketsStore((state) => state.selectedTicketId);
+  const createTicket = useTicketsStore((state) => state.createTicket);
 
-  const currentTicketId = useStore(
-    ticketsStore,
-    (state) => state.selectedTicketId
-  );
-  const setCurrentTicketId = useStore(
-    ticketsStore,
+  const setCurrentTicketId = useTicketsStore(
     (state) => state.setSelectedTicketId
   );
-  const createTicket = useStore(ticketsStore, (state) => state.createTicket);
 
   const tickets = ticketsOnStore.map(
     ({ temporaryId, ticketNumber, ticketName }) => ({

@@ -1,5 +1,4 @@
-import type { ClientPrimitive } from "@clients/domain/client.model";
-import type { ClientFormDto } from "@clients/domain/schemas/types";
+import type { ClientFormDto, ClientPrimitive } from "@clients/domain/types";
 
 export class ClientsMapper {
   static prepareToCreate(client: ClientFormDto): Omit<ClientPrimitive, "id"> {

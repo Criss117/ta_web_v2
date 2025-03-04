@@ -4,7 +4,7 @@ import { UpdateProductUseCase } from "@products/application/usecases/update-prod
 
 import { GetOneByUseCase } from "@products/application/usecases/get-one-by.usecase";
 import { DeleteProductUseCase } from "@products/application/usecases/delete-product.usecase";
-import type { ProductFormDto } from "@products/domain/schemas/types";
+import type { ProductFormDto } from "@/modules/products/domain/types";
 import type { MutationResponse } from "@shared/models/types";
 
 export function useProducts() {

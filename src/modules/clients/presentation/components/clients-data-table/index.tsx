@@ -3,7 +3,7 @@ import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { Paginable } from "@shared/models/types";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
-import { type ClientPrimitive } from "@/modules/clients/domain/client.model";
+import { ClientPrimitive } from "@clients/domain/types";
 
 interface Props {
   clients: Paginable<ClientPrimitive>;

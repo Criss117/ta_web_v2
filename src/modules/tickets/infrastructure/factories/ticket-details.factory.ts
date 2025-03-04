@@ -1,10 +1,8 @@
 import { FakerFacade } from "@shared/facades/faker.facade";
-import { TicketModel } from "@tickets/domain/models/ticket.model";
-import {
-  TicketDetailModel,
-  type TicketDetailPrimitive,
-} from "@tickets/domain/models/ticket-detail.model";
+import { TicketModel } from "@/modules/tickets/domain/ticket.model";
+import { TicketDetailModel } from "@/modules/tickets/domain/ticket-detail.model";
 import { ProductModel } from "@products/domain/product.model";
+import type { TicketDetailPrimitive } from "@tickets/domain/types";
 
 export class TicketDetailsFactory {
   static instance: TicketDetailsFactory;

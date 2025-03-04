@@ -1,5 +1,5 @@
 import { ClientRepository } from "@clients/infrastructure/repositories/client.repository";
-import type { ClientFormDto } from "@clients/domain/schemas/types";
+import type { ClientFormDto } from "@clients/domain/types";
 
 export class UpdateClientUseCase {
   static instance: UpdateClientUseCase;

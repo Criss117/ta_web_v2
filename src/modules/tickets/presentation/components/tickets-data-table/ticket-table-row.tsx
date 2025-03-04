@@ -1,14 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { SquarePen, Trash2 } from "lucide-react";
-import { useStore } from "zustand";
 
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
 import { cn } from "@/lib/utils";
 import { TableCell, TableRow } from "@ui/table";
-import { ticketsStore } from "@tickets/application/store/tickets.store";
+import { useTicketsStore } from "@tickets/application/store/tickets.store";
 
-import type { TicketDetailStore } from "@tickets/domain/schemas/types";
+import type { TicketDetailStore } from "@tickets/domain/types";
 import { formatCurrency } from "@/lib/utils";
 
 interface Props {
@@ -16,11 +15,11 @@ interface Props {
 }
 
 const TicketTableRow = ({ product }: Props) => {
-  const changeSalePriceOrQuantity = useStore(
-    ticketsStore,
+  const changeSalePriceOrQuantity = useTicketsStore(
     (state) => state.changeSalePriceOrQuantity
   );
-  const deleteDetail = useStore(ticketsStore, (state) => state.deleteDetail);
+
+  const deleteDetail = useTicketsStore((state) => state.deleteDetail);
 
   const onChange = (salePrice: number, quantity: number) => {
     if (quantity < 1 || quantity > product.stock) return;

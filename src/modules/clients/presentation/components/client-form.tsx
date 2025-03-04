@@ -5,10 +5,9 @@ import { Button } from "@ui/button";
 import { Form, FormField } from "@ui/form";
 import { FormItemInput } from "@form/form-item-input";
 
-import type { MutationResponse } from "@shared/models/types";
-import type { ClientPrimitive } from "@clients/domain/client.model";
 import { useClientForm } from "@clients/application/hooks/use.client-form";
-import type { ClientFormDto } from "@/modules/clients/domain/schemas/types";
+import type { MutationResponse } from "@shared/models/types";
+import type { ClientFormDto, ClientPrimitive } from "@clients/domain/types";
 
 interface Props {
   client?: ClientPrimitive;

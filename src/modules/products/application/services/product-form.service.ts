@@ -1,7 +1,7 @@
 import { z } from "zod";
-import type { ProductFormDto } from "@products/domain/schemas/types";
+import type { ProductFormDto } from "@/modules/products/domain/types";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.message";
-import { ProductFormSchema } from "@products/domain/schemas/product.schema";
+import { ProductFormSchema } from "@/modules/products/domain/product-form.schema";
 
 type ClientError = {
   error: boolean;

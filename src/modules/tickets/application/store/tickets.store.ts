@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type {
   TicketDetailStore,
   TicketState,
-} from "@tickets/domain/schemas/types";
+} from "@/modules/tickets/domain/types";
 import { TicketsStoreService } from "@tickets/application/services/tickets-store.service";
 
 export interface TicketsStoreState {
@@ -18,27 +18,25 @@ export interface TicketsStoreActions {
   deleteTicket: (temporaryId: string) => void;
   clearTicket: (temporaryId: string) => void;
   changeTicketName: (temporaryId: string, name: string) => void;
+  deleteDetail: (barcode: string) => void;
   addTicketDetail: (detail: TicketDetailStore) => void;
   changeSalePriceOrQuantity: (
     barcode: string,
     salePrice: number,
     quantity: number
   ) => void;
-  deleteDetail: (barcode: string) => void;
 }
 
 type TicketsStore = TicketsStoreState & TicketsStoreActions;
 
 const defaultTicket: TicketState = {
-  total: 0,
   temporaryId: crypto.randomUUID(),
   ticketName: null,
-  clientId: null,
   ticketNumber: 1,
   detail: [],
 };
 
-export const ticketsStore = create<TicketsStore>()(
+export const useTicketsStore = create<TicketsStore>()(
   persist(
     (set, get) => ({
       tickets: [defaultTicket],

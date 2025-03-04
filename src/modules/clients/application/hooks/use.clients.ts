@@ -5,8 +5,7 @@ import { DeleteClientUseCase } from "@clients/application/usecases/delete-client
 import { UpdateClientUseCase } from "@clients/application/usecases/update-client.usecase";
 import { GetManyClientsUseCase } from "@clients/application/usecases/get-many-clients.usecase";
 import { GetOneClientByUseCase } from "@clients/application/usecases/get-one-client-by.usecase";
-
-import type { ClientFormDto } from "@clients/domain/schemas/types";
+import type { ClientFormDto } from "@clients/domain/types";
 
 export function useClients() {
   const create = async (client: ClientFormDto): Promise<MutationResponse> => {

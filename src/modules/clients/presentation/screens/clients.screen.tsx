@@ -13,8 +13,8 @@ import { SearchBarQuery } from "@/components/data-table/search-bar-query";
 import { useClients } from "@clients/application/hooks/use.clients";
 import { ClientsDataTable } from "@clients/presentation/components/clients-data-table";
 
-import type { ClientPrimitive } from "@clients/domain/client.model";
 import type { Paginable } from "@shared/models/types";
+import type { ClientPrimitive } from "@clients/domain/types";
 
 export function ClientsScreen({ page, size, query }: Pagination) {
   const nav = useNavigate();

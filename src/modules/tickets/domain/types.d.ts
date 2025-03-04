@@ -1,5 +1,5 @@
-import type { TicketDetailPrimitive } from "../models/ticket-detail.model";
-import type { TicketPrimitive } from "../models/ticket.model";
+import type { TicketDetailPrimitive } from "./ticket-detail.model";
+import { TicketModelSchema } from "./ticket.schema";
 
 export interface TicketDetailStore
   extends Pick<
@@ -11,10 +11,12 @@ export interface TicketDetailStore
   stock: number;
 }
 
-export interface TicketState
-  extends Pick<TicketPrimitive, "total" | "clientId"> {
+export interface TicketState {
   temporaryId: string;
   ticketNumber: number;
   ticketName: string | null;
   detail: TicketDetailStore[];
 }
+
+export type TicketPrimitive = z.infer<typeof TicketModelSchema>;
+export type TicketDetailPrimitive = z.infer<typeof TicketDetailModelSchema>;

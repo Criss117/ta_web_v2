@@ -4,10 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
-import type { ClientPrimitive } from "@clients/domain/client.model";
-import type { ClientFormDto } from "@clients/domain/schemas/types";
-import { ClientFormSchema } from "@clients/domain/schemas/client.schema";
 import { MutationResponse } from "@shared/models/types";
+import type { ClientFormDto, ClientPrimitive } from "@clients/domain/types";
+import { ClientFormSchema } from "@clients/domain/client-form.schema";
 
 export function useClientForm(client?: ClientPrimitive) {
   const [responseStatus, setResponseStatus] = useState<MutationResponse | null>(

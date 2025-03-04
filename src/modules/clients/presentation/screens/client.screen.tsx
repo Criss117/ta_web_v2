@@ -1,7 +1,7 @@
 import { BackButton } from "@/components/ui/back-button";
 import { formatCurrency } from "@/lib/utils";
-import type { ClientPrimitive } from "@clients/domain/client.model";
-import { ClientInfo } from "../components/client-info";
+import { ClientInfo } from "@clients/presentation/components/client-info";
+import type { ClientPrimitive } from "@clients/domain/types";
 
 interface Props {
   client: ClientPrimitive;

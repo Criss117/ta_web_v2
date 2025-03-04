@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { ClientPrimitive } from "@clients/domain/client.model";
 import { ActionsNav } from "./actions-nav";
+import type { ClientPrimitive } from "@clients/domain/types";
 
 interface Props {
   client: ClientPrimitive;

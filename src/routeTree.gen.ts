@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
 import { Route as DashboardLayoutImport } from './routes/dashboard/_layout'
 import { Route as DashboardLayoutIndexImport } from './routes/dashboard/_layout/index'
 import { Route as DashboardLayoutProductsIndexImport } from './routes/dashboard/_layout/products/index'
@@ -36,6 +37,12 @@ const DashboardLayoutClientsCreateLazyImport = createFileRoute(
 const DashboardRoute = DashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -111,6 +118,13 @@ const DashboardLayoutClientsIdentifierEditRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -229,6 +243,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/dashboard/': typeof DashboardLayoutIndexRoute
   '/dashboard/clients/create': typeof DashboardLayoutClientsCreateLazyRoute
@@ -241,6 +256,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/dashboard': typeof DashboardLayoutIndexRoute
   '/dashboard/clients/create': typeof DashboardLayoutClientsCreateLazyRoute
   '/dashboard/products/create': typeof DashboardLayoutProductsCreateLazyRoute
@@ -253,6 +269,7 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/_layout': typeof DashboardLayoutRouteWithChildren
   '/dashboard/_layout/': typeof DashboardLayoutIndexRoute
@@ -268,6 +285,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/dashboard'
     | '/dashboard/'
     | '/dashboard/clients/create'
@@ -279,6 +297,7 @@ export interface FileRouteTypes {
     | '/dashboard/clients/$identifier'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/dashboard'
     | '/dashboard/clients/create'
     | '/dashboard/products/create'
@@ -289,6 +308,7 @@ export interface FileRouteTypes {
     | '/dashboard/clients/$identifier'
   id:
     | '__root__'
+    | '/'
     | '/dashboard'
     | '/dashboard/_layout'
     | '/dashboard/_layout/'
@@ -303,10 +323,12 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
 }
 
@@ -320,8 +342,12 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/dashboard"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/dashboard": {
       "filePath": "dashboard",

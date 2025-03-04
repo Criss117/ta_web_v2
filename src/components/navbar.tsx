@@ -42,7 +42,7 @@ export function Navbar() {
             <Button
               key={href}
               asChild
-              variant={pathname + "/" === href ? "default" : "outline"}
+              variant={pathname + "/" === href ? "selected" : "outline"}
               className="gap-2"
             >
               <Link to={href}>

@@ -4,8 +4,8 @@ import { Input } from "@ui/input";
 import { Label } from "@ui/label";
 import { Button } from "@ui/button";
 import { useProducts } from "@products/application/hooks/use.products";
-import type { ProductPrimitive } from "@products/domain/product.model";
 import { X } from "lucide-react";
+import { ProductPrimitive } from "@products/domain/types";
 
 interface Props {
   searchByQueryFn: (product: ProductPrimitive) => void;

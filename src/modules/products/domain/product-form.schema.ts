@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.message";
-import { ProductModelSchema } from "../product.model";
+import { ProductModelSchema } from "./product.schema";
 
 export const ProductFormSchema = ProductModelSchema.pick({
   barcode: true,

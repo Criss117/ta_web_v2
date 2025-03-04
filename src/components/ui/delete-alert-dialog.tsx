@@ -1,5 +1,5 @@
 import { useEffect, useState, type JSX } from "react";
-import { Loader } from "lucide-react";
+import { Loader, Trash2 } from "lucide-react";
 
 import {
   AlertDialog,
@@ -38,9 +38,9 @@ const DeleteAlertDialog = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger onClick={(e) => e.stopPropagation()}>
-        <Button variant="destructive" asChild>
-          <p>Eliminar</p>
+      <AlertDialogTrigger onClick={(e) => e.stopPropagation()} asChild>
+        <Button variant="destructive" className="w-1/2">
+          <Trash2 size={18} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

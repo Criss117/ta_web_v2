@@ -1,3 +1,4 @@
+import { SquarePen } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "@tanstack/react-router";
 import { format } from "@formkit/tempo";
@@ -5,7 +6,7 @@ import { format } from "@formkit/tempo";
 import { Button } from "@ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { DeleteProduct } from "../delete-product";
-import type { ProductPrimitive } from "@/modules/products/domain/product.model";
+import { ProductPrimitive } from "@products/domain/types";
 
 export const columns: ColumnDef<ProductPrimitive>[] = [
   {
@@ -64,15 +65,15 @@ export const columns: ColumnDef<ProductPrimitive>[] = [
       const product = row.original;
 
       return (
-        <div className="flex gap-2">
-          {product.id !== undefined && <DeleteProduct id={product.id} />}
-          <Button asChild variant="outline">
+        <div className="flex gap-x-2 justify-between z-50">
+          <DeleteProduct id={product.id} />
+          <Button asChild className="w-1/2">
             <Link
-              className="w-1/2"
               to="/dashboard/products/$barcode/edit"
               params={{ barcode: product.barcode }}
+              onClick={(e) => e.stopPropagation()}
             >
-              Editar
+              <SquarePen size={18} />
             </Link>
           </Button>
         </div>

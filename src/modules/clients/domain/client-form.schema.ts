@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CLIENT_FORM_MESSAGES } from "@/lib/messages/client.message";
-import { ClientModelSchema } from "@clients/domain/client.model";
+import { ClientModelSchema } from "./client.schema";
 
 export const ClientFormSchema = ClientModelSchema.pick({
   identifier: true,

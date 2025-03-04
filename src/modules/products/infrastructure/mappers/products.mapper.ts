@@ -1,5 +1,7 @@
-import type { ProductPrimitive } from "@products/domain/product.model";
-import type { ProductFormDto } from "@products/domain/schemas/types";
+import type {
+  ProductFormDto,
+  ProductPrimitive,
+} from "@/modules/products/domain/types";
 
 export class ProductsMapper {
   public static prepareToCreate(

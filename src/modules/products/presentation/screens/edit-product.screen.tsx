@@ -3,7 +3,7 @@ import { SectionHeader } from "@ui/section-header";
 import { SectionLayout } from "@ui/section-layout";
 import { ProductForm } from "@products/presentation/components/product-form";
 import { useProducts } from "@products/application/hooks/use.products";
-import { ProductPrimitive } from "@/modules/products/domain/product.model";
+import { ProductPrimitive } from "@products/domain/types";
 
 interface Props {
   product: ProductPrimitive;

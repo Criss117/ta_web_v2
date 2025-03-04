@@ -17,6 +17,10 @@ export abstract class Model<T, K = number> {
     return this.table.add(data as T);
   }
 
+  async put(data: Omit<T, "id">): Promise<K> {
+    return this.table.put(data as T);
+  }
+
   async getById(id: K): Promise<T | undefined> {
     return this.table.get(id);
   }
@@ -93,5 +97,9 @@ export abstract class Model<T, K = number> {
     console.log(query);
 
     return this.getPaginated(page, size);
+  }
+
+  async bulkAdd(data: Omit<T, "id">[]) {
+    return this.table.bulkAdd(data as T[]);
   }
 }

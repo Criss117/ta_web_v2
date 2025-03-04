@@ -1,5 +1,5 @@
 import { ProductRepository } from "@products/infrastructure/repositories/product.repository";
-import type { ProductFormDto } from "@products/domain/schemas/types";
+import type { ProductFormDto } from "@/modules/products/domain/types";
 
 export class UpdateProductUseCase {
   private static instance: UpdateProductUseCase;

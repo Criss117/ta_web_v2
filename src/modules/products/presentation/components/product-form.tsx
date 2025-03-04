@@ -6,8 +6,7 @@ import { FormItemInput } from "@form/form-item-input";
 import { toast } from "sonner";
 
 import { useProductForm } from "@products/application/hooks/use.product-form";
-import type { ProductFormDto } from "@/modules/products/domain/schemas/types";
-import { ProductPrimitive } from "@products/domain/product.model";
+import type { ProductFormDto, ProductPrimitive } from "@products/domain/types";
 import { MutationResponse } from "@shared/models/types";
 
 const formItemsText = [

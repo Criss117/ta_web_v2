@@ -7,13 +7,14 @@ import { cn } from "@/lib/utils";
 import { SectionLayout } from "@ui/section-layout";
 import { SectionHeader } from "@ui/section-header";
 import { Pagination } from "@shared/models/types";
-import type { Paginable } from "@shared/models/types";
 
 import { ProductsDataTable } from "@products/presentation/components/products-data-table";
-import { ProductPrimitive } from "@products/domain/product.model";
 import { useProducts } from "@products/application/hooks/use.products";
 import { TablePag } from "@/components/data-table/table-pag";
 import { SearchBarQuery } from "@/components/data-table/search-bar-query";
+
+import type { Paginable } from "@shared/models/types";
+import type { ProductPrimitive } from "@products/domain/types";
 
 export function ProductsScreen({ page, size, query }: Pagination) {
   const nav = useNavigate();

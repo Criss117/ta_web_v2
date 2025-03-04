@@ -1,10 +1,7 @@
 import { Paginable } from "@shared/models/types";
-import {
-  ClientModel,
-  type ClientPrimitive,
-} from "@clients/domain/client.model";
+import { ClientModel } from "@clients/domain/client.model";
 import { ClientsMapper } from "@clients/infrastructure/mappers/clients.mapper";
-import type { ClientFormDto } from "@clients/domain/schemas/types";
+import type { ClientFormDto, ClientPrimitive } from "@clients/domain/types";
 
 export class ClientRepository {
   static instance: ClientRepository;
@@ -20,6 +17,10 @@ export class ClientRepository {
 
   public async getByIdentifier(identifier: string) {
     return this.clientModel.getByField("identifier", identifier);
+  }
+
+  public async get(id: number) {
+    return this.clientModel.getById(id);
   }
 
   public async getPaginated(

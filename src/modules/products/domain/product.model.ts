@@ -1,35 +1,22 @@
-import { z } from "zod";
-import { DB, Model } from "@shared/repositories";
+import { Table } from "dexie";
+import { Model } from "@shared/repositories";
 import { Paginable } from "@shared/models/types";
-
-export const ProductModelSchema = z.object({
-  id: z.number(),
-  barcode: z.string(),
-  description: z.string(),
-  costPrice: z.number(),
-  salePrice: z.number(),
-  wholesalePrice: z.number(),
-  stock: z.number(),
-  minStock: z.number(),
-  createdAt: z.date().default(() => new Date()),
-  updatedAt: z.date().default(() => new Date()),
-  deletedAt: z.date().nullable(),
-  isActive: z.boolean().default(true),
-});
-
-export type ProductPrimitive = z.infer<typeof ProductModelSchema>;
+import { ProductPrimitive } from "./types";
 
 export class ProductModel extends Model<ProductPrimitive> {
   static instance: ProductModel;
 
-  constructor() {
-    const model = DB.createModel("products", ProductModelSchema.shape);
-    super(model);
+  constructor(table: Table<ProductPrimitive>) {
+    super(table);
+  }
+
+  static init(table: Table<ProductPrimitive>) {
+    ProductModel.instance = new ProductModel(table);
   }
 
   static getInstance() {
     if (!this.instance) {
-      this.instance = new ProductModel();
+      throw new Error("ProductModel no inicializado");
     }
     return this.instance;
   }

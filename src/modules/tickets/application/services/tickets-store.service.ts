@@ -2,7 +2,7 @@ import { validateStock } from "@/lib/utils";
 import type {
   TicketDetailStore,
   TicketState,
-} from "@tickets/domain/schemas/types";
+} from "@/modules/tickets/domain/types";
 
 export class TicketsStoreService {
   static mutateDetail(
@@ -42,10 +42,8 @@ export class TicketsStoreService {
     const lastTicketNumber = tickets[tickets.length - 1].ticketNumber;
 
     const newTicket: TicketState = {
-      total: 0,
       temporaryId: crypto.randomUUID(),
       ticketName: null,
-      clientId: null,
       ticketNumber: lastTicketNumber + 1,
       detail: [],
     };
@@ -84,18 +82,12 @@ export class TicketsStoreService {
   }
 
   static clearTicket(tickets: TicketState[], temporaryId: string) {
-    const newTickets = tickets.map((ticket) => {
-      if (ticket.temporaryId === temporaryId) {
-        return {
-          ...ticket,
-          detail: [],
-        };
-      }
-
-      return ticket;
+    return this.mutateTickets(tickets, temporaryId, (ticket) => {
+      return {
+        ...ticket,
+        detail: [],
+      };
     });
-
-    return newTickets;
   }
 
   static changeTicketName(
@@ -103,18 +95,12 @@ export class TicketsStoreService {
     temporaryId: string,
     name: string
   ) {
-    const newTickets = tickets.map((ticket) => {
-      if (ticket.temporaryId === temporaryId) {
-        return {
-          ...ticket,
-          ticketName: name,
-        };
-      }
-
-      return ticket;
+    return this.mutateTickets(tickets, temporaryId, (ticket) => {
+      return {
+        ...ticket,
+        ticketName: name,
+      };
     });
-
-    return newTickets;
   }
 
   static addTicketDetail(

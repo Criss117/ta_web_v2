@@ -1,10 +1,10 @@
 import type { Paginable } from "@shared/models/types";
-import {
-  ProductModel,
-  type ProductPrimitive,
-} from "@products/domain/product.model";
+import { ProductModel } from "@products/domain/product.model";
 import { ProductsMapper } from "@products/infrastructure/mappers/products.mapper";
-import type { ProductFormDto } from "@products/domain/schemas/types";
+import type {
+  ProductFormDto,
+  ProductPrimitive,
+} from "@/modules/products/domain/types";
 
 export class ProductRepository {
   static instance: ProductRepository;

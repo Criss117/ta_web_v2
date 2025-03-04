@@ -1,8 +1,6 @@
 import { FakerFacade } from "@shared/facades/faker.facade";
-import {
-  ClientModel,
-  type ClientPrimitive,
-} from "@clients/domain/client.model";
+import { ClientModel } from "@clients/domain/client.model";
+import type { ClientPrimitive } from "@clients/domain/types";
 
 export class ClientFactory {
   static instance: ClientFactory;

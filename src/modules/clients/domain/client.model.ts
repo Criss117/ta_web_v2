@@ -1,36 +1,24 @@
-import { z } from "zod";
-import { DB, Model } from "@shared/repositories";
+import type { Table } from "dexie";
+import { Model } from "@shared/repositories";
 import type { Paginable } from "@shared/models/types";
-
-export const ClientModelSchema = z.object({
-  id: z.number(),
-  identifier: z.string(),
-  fullName: z.string(),
-  address: z.string().optional(),
-  phone: z.string().optional(),
-  creditLimit: z.number(),
-  balance: z.number().default(0),
-  createdAt: z.date().default(() => new Date()),
-  updatedAt: z.date().default(() => new Date()),
-  deletedAt: z.date().nullable(),
-  isActive: z.boolean().default(true),
-});
-
-export type ClientPrimitive = z.infer<typeof ClientModelSchema>;
+import { ClientPrimitive } from "./types";
 
 export class ClientModel extends Model<ClientPrimitive> {
   static instance: ClientModel;
 
-  constructor() {
-    const model = DB.createModel("clients", ClientModelSchema.shape);
-    super(model);
+  private constructor(table: Table<ClientPrimitive>) {
+    super(table);
+  }
+
+  static init(table: Table<ClientPrimitive>) {
+    ClientModel.instance = new ClientModel(table);
   }
 
   static getInstance() {
-    if (!this.instance) {
-      this.instance = new ClientModel();
+    if (!ClientModel.instance) {
+      throw new Error("ClientModel no inicializado");
     }
-    return this.instance;
+    return ClientModel.instance;
   }
 
   private compareQuery(product: ClientPrimitive, query: string): boolean {

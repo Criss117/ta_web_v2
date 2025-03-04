@@ -1,6 +1,4 @@
-import { useStore } from "zustand";
-
-import { ticketsStore } from "@tickets/application/store/tickets.store";
+import { useTicketsStore } from "@tickets/application/store/tickets.store";
 import {
   Table,
   TableBody,
@@ -51,7 +49,7 @@ const headers = [
 ] as const;
 
 export function TicketsDataTable() {
-  const ticketDetails = useStore(ticketsStore, (state) => {
+  const ticketDetails = useTicketsStore((state) => {
     return state.tickets.find((t) => t.temporaryId === state.selectedTicketId)
       ?.detail;
   })!;
