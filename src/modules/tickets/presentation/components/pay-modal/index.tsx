@@ -32,6 +32,10 @@ export function PayModal({ ticket }: Props) {
     0
   );
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     if (isOpen) return;
 
@@ -94,8 +98,9 @@ export function PayModal({ ticket }: Props) {
           <div className="bg-light-primary-200 w-1/3 h-full space-y-5 p-2">
             <PayModalActions
               isCredit={isCredit}
-              ticketDetail={ticket.detail}
+              ticket={ticket}
               clientId={selectedClient?.id || null}
+              onSuccess={closeModal}
             />
             <Button
               className="w-full"

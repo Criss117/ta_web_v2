@@ -22,7 +22,7 @@ export function SimpleClientList({ selectedClientId, onSelectClient }: Props) {
 
   useEffect(() => {
     if (queryDebaunce.length >= 3 || queryDebaunce.length === 0) {
-      getMany(1, 20, queryDebaunce).then(({ items }) => setClients(items));
+      getMany(0, 20, queryDebaunce).then(({ items }) => setClients(items));
     }
   }, [queryDebaunce]);
 

@@ -73,6 +73,18 @@ export class ProductRepository {
     return this.productModel.update(id, updatedProduct);
   }
 
+  public async updateStock(barcode: string, quantity: number) {
+    const existingProduct = await this.getByBarcode(barcode);
+
+    if (!existingProduct) {
+      throw new Error("El producto no existe");
+    }
+
+    return this.productModel.update(existingProduct.id, {
+      stock: existingProduct.stock - quantity,
+    });
+  }
+
   public delete(id: number) {
     return this.productModel.softDelete(id, (product) => {
       product.deletedAt = new Date();

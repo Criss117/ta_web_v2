@@ -1,18 +1,26 @@
 import { useTransition } from "react";
+import { toast } from "sonner";
 import { Button } from "@ui/button";
 import { LoaderComponent } from "@ui/loader-component";
-import type { TicketDetailStore } from "@/modules/tickets/domain/types";
-import { useTickets } from "@/modules/tickets/application/hooks/use.tickets";
-import { toast } from "sonner";
+import type { TicketState } from "@tickets/domain/types";
+import { useTickets } from "@tickets/application/hooks/use.tickets";
+import { useTicketsStore } from "@tickets/application/store/tickets.store";
 
 interface Props {
   isCredit: boolean;
-  ticketDetail: TicketDetailStore[];
+  ticket: TicketState;
   clientId: number | null;
+  onSuccess: () => void;
 }
 
-export function PayModalActions({ isCredit, ticketDetail, clientId }: Props) {
+export function PayModalActions({
+  isCredit,
+  ticket,
+  clientId,
+  onSuccess,
+}: Props) {
   const [isPending, startTansition] = useTransition();
+  const clearTicket = useTicketsStore((state) => state.clearTicket);
   const { create } = useTickets();
 
   const handleClick = () => {
@@ -29,14 +37,11 @@ export function PayModalActions({ isCredit, ticketDetail, clientId }: Props) {
     }
 
     startTansition(async () => {
-      await create(ticketDetail, null);
+      await create(ticket.detail, clientId).then((res) => {
+        if (!res.success) return;
 
-      toast("Venta registrada", {
-        description: "La venta se ha registrado correctamente",
-        style: {
-          background: "var(--success)",
-          borderColor: "var(--success)",
-        },
+        clearTicket(ticket.temporaryId);
+        onSuccess();
       });
     });
   };

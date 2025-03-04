@@ -1,4 +1,5 @@
 import type { TicketDetailPrimitive } from "./ticket-detail.model";
+import { TicketDetailModelSchema } from "./ticket-detail.schema";
 import { TicketModelSchema } from "./ticket.schema";
 
 export interface TicketDetailStore

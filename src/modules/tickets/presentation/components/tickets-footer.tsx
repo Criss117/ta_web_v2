@@ -25,7 +25,7 @@ export function TicketsFooter() {
               Cobrar
             </Button>
           )}
-          {ticket !== null && <PayModal ticket={ticket} />}
+          {ticket !== null && total > 0 && <PayModal ticket={ticket} />}
         </div>
         <Separator orientation="vertical" className="mx-5" />
         <div className="w-1/2">

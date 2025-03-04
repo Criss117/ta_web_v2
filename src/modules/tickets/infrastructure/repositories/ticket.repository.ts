@@ -10,16 +10,16 @@ export class TicketRepository {
 
   constructor(
     private readonly ticketModel: TicketModel,
-    private readonly clientRepository: ClientRepository
-    // private readonly ticketDetailRepository: TicketDetailRepository
+    private readonly clientRepository: ClientRepository,
+    private readonly ticketDetailRepository: TicketDetailRepository
   ) {}
 
   public static getInstance() {
     if (!this.instance) {
       this.instance = new TicketRepository(
         TicketModel.getInstance(),
-        ClientRepository.getInstance()
-        // TicketDetailRepository.getInstance()
+        ClientRepository.getInstance(),
+        TicketDetailRepository.getInstance()
       );
     }
     return this.instance;
@@ -34,26 +34,30 @@ export class TicketRepository {
       0
     );
 
-    console.log({ ticketDetail, clientId, total });
+    if (clientId) {
+      const client = await this.clientRepository.get(clientId);
 
-    // if (clientId) {
-    //   const client = await this.clientRepository.get(clientId);
+      if (!client) {
+        throw new Error("El cliente no existe");
+      }
 
-    //   if (!client) {
-    //     throw new Error("El cliente no existe");
-    //   }
-    // }
+      const newBalance = client.balance + total;
 
-    // const ticketId = await this.ticketModel.put(
-    //   TicketsMapper.prepareToCreate(total, clientId)
-    // );
+      if (newBalance < 0 || newBalance > client.creditLimit) {
+        throw new Error("El balance no es correcto");
+      }
 
-    // await this.ticketDetailRepository.createMany(
-    //   TicketDetailMapper.prepareManyToCreate(ticketDetail, ticketId)
-    // );
+      await this.clientRepository.updateBalance(clientId, newBalance);
+    }
 
-    // return ticketId;
+    const ticketId = await this.ticketModel.put(
+      TicketsMapper.prepareToCreate(total, clientId)
+    );
 
-    return "1";
+    await this.ticketDetailRepository.createMany(
+      TicketDetailMapper.prepareManyToCreate(ticketDetail, ticketId)
+    );
+
+    return ticketId;
   }
 }

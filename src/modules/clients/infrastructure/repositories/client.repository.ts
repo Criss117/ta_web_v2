@@ -48,6 +48,19 @@ export class ClientRepository {
     return this.clientModel.add(ClientsMapper.prepareToCreate(client));
   }
 
+  public async updateBalance(id: number, balance: number) {
+    const existingClient = await this.clientModel.getByField("id", id);
+
+    if (!existingClient) {
+      throw new Error("El cliente no existe");
+    }
+
+    await this.clientModel.update(id, {
+      ...existingClient,
+      balance,
+    });
+  }
+
   public async edit(id: number, client: ClientFormDto) {
     const existingClient = await this.clientModel.getByField("id", id);
 

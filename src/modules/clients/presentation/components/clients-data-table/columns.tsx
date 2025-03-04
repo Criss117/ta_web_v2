@@ -1,10 +1,12 @@
+import { SquarePen } from "lucide-react";
+import { format } from "@formkit/tempo";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "@tanstack/react-router";
-import { SquarePen } from "lucide-react";
 
 import { Button } from "@ui/button";
 import { DeleteClient } from "@clients/presentation/components/delete-client";
-import { ClientPrimitive } from "@clients/domain/types";
+import type { ClientPrimitive } from "@clients/domain/types";
+import { formatCurrency } from "@/lib/utils";
 
 export const columns: ColumnDef<ClientPrimitive>[] = [
   {
@@ -18,10 +20,16 @@ export const columns: ColumnDef<ClientPrimitive>[] = [
   {
     accessorKey: "balance",
     header: "Balance",
+    cell: ({ row }) => {
+      return formatCurrency(row.original.balance);
+    },
   },
   {
     accessorKey: "creditLimit",
     header: "Limite de credito",
+    cell: ({ row }) => {
+      return formatCurrency(row.original.creditLimit);
+    },
   },
   {
     accessorKey: "address",
@@ -29,9 +37,15 @@ export const columns: ColumnDef<ClientPrimitive>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ getValue }) => {
-      return new Date(getValue() as Date).toLocaleDateString();
+    header: "Creado el",
+    cell: ({ row }) => {
+      return format(
+        row.original.createdAt,
+        {
+          date: "long",
+        },
+        "es-CO"
+      );
     },
   },
   {
