@@ -1,19 +1,19 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["./src/modules/shared/*"],
-      "@products/*": ["./src/modules/products/*"],
-      "@clients/*": ["./src/modules/clients/*"],
-      "@ui/*": ["./src/components/ui/*"],
-      "@form/*": ["./src/components/form/*"],
-      "@tickets/*": ["./src/modules/tickets/*"]
-    }
-  }
+	"files": [],
+	"references": [
+		{ "path": "./tsconfig.app.json" },
+		{ "path": "./tsconfig.node.json" }
+	],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@shared/*": ["./src/modules/shared/*"],
+			"@products/*": ["./src/modules/products/*"],
+			"@clients/*": ["./src/modules/clients/*"],
+			"@ui/*": ["./src/components/ui/*"],
+			"@form/*": ["./src/components/form/*"],
+			"@tickets/*": ["./src/modules/tickets/*"]
+		}
+	}
 }
