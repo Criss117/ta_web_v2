@@ -2,18 +2,20 @@ import { ProductRepository } from "@products/infrastructure/repositories/product
 import type { ProductFormDto } from "@products/domain/types";
 
 export class CreateProductUseCase {
-  static instance: CreateProductUseCase;
+	static instance: CreateProductUseCase;
 
-  constructor(private readonly repository: ProductRepository) {}
+	constructor(private readonly repository: ProductRepository) {}
 
-  public static getInstance() {
-    if (!this.instance) {
-      this.instance = new CreateProductUseCase(ProductRepository.getInstance());
-    }
-    return this.instance;
-  }
+	public static getInstance() {
+		if (!CreateProductUseCase.instance) {
+			CreateProductUseCase.instance = new CreateProductUseCase(
+				ProductRepository.getInstance(),
+			);
+		}
+		return CreateProductUseCase.instance;
+	}
 
-  public async execute(product: ProductFormDto) {
-    return this.repository.create(product);
-  }
+	public async execute(product: ProductFormDto) {
+		return this.repository.create(product);
+	}
 }

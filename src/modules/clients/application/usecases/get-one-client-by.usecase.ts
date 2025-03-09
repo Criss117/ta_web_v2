@@ -1,18 +1,20 @@
 import { ClientRepository } from "@clients/infrastructure/repositories/client.repository";
 
 export class GetOneClientByUseCase {
-  static instance: GetOneClientByUseCase;
+	static instance: GetOneClientByUseCase;
 
-  constructor(private readonly clientRepository: ClientRepository) {}
+	private constructor(private readonly clientRepository: ClientRepository) {}
 
-  public static getInstance() {
-    if (!this.instance) {
-      this.instance = new GetOneClientByUseCase(ClientRepository.getInstance());
-    }
-    return this.instance;
-  }
+	public static getInstance() {
+		if (!GetOneClientByUseCase.instance) {
+			GetOneClientByUseCase.instance = new GetOneClientByUseCase(
+				ClientRepository.getInstance(),
+			);
+		}
+		return GetOneClientByUseCase.instance;
+	}
 
-  public async identifier(identifier: string) {
-    return this.clientRepository.getByIdentifier(identifier);
-  }
+	public async identifier(identifier: string) {
+		return this.clientRepository.getByIdentifier(identifier);
+	}
 }

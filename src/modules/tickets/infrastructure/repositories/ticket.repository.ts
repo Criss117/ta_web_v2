@@ -6,62 +6,62 @@ import { TicketDetailMapper } from "@tickets/infrastructure/mappers/ticket-detai
 import type { TicketDetailStore, TicketPrimitive } from "@tickets/domain/types";
 
 export class TicketRepository {
-  static instance: TicketRepository;
+	static instance: TicketRepository;
 
-  constructor(
-    private readonly ticketModel: TicketModel,
-    private readonly clientRepository: ClientRepository,
-    private readonly ticketDetailRepository: TicketDetailRepository
-  ) {}
+	constructor(
+		private readonly ticketModel: TicketModel,
+		private readonly clientRepository: ClientRepository,
+		private readonly ticketDetailRepository: TicketDetailRepository,
+	) {}
 
-  public static getInstance() {
-    if (!this.instance) {
-      this.instance = new TicketRepository(
-        TicketModel.getInstance(),
-        ClientRepository.getInstance(),
-        TicketDetailRepository.getInstance()
-      );
-    }
-    return this.instance;
-  }
+	public static getInstance() {
+		if (!TicketRepository.instance) {
+			TicketRepository.instance = new TicketRepository(
+				TicketModel.getInstance(),
+				ClientRepository.getInstance(),
+				TicketDetailRepository.getInstance(),
+			);
+		}
+		return TicketRepository.instance;
+	}
 
-  public async create(
-    ticketDetail: TicketDetailStore[],
-    clientId: number | null
-  ) {
-    const total = ticketDetail.reduce(
-      (total, detail) => total + detail.subTotal,
-      0
-    );
+	public async create(
+		ticketDetail: TicketDetailStore[],
+		clientId: number | null,
+	) {
+		const total = ticketDetail.reduce(
+			(total, detail) => total + detail.subTotal,
+			0,
+		);
 
-    if (clientId) {
-      const client = await this.clientRepository.get(clientId);
+		if (clientId) {
+			const client = await this.clientRepository.get(clientId);
 
-      if (!client) {
-        throw new Error("El cliente no existe");
-      }
+			if (!client) {
+				throw new Error("El cliente no existe");
+			}
 
-      const newBalance = client.balance + total;
+			const newBalance = client.balance + total;
 
-      if (newBalance < 0 || newBalance > client.creditLimit) {
-        throw new Error("El balance no es correcto");
-      }
+			if (newBalance < 0 || newBalance > client.creditLimit) {
+				throw new Error("El balance no es correcto");
+			}
 
-      await this.clientRepository.updateBalance(clientId, newBalance);
-    }
+			await this.clientRepository.updateBalance(clientId, newBalance);
+		}
 
-    const ticketId = await this.ticketModel.put(
-      TicketsMapper.prepareToCreate(total, clientId)
-    );
+		const ticketId = await this.ticketModel.put(
+			TicketsMapper.prepareToCreate(total, clientId),
+		);
 
-    await this.ticketDetailRepository.createMany(
-      TicketDetailMapper.prepareManyToCreate(ticketDetail, ticketId)
-    );
+		await this.ticketDetailRepository.createMany(
+			TicketDetailMapper.prepareManyToCreate(ticketDetail, ticketId),
+		);
 
-    return ticketId;
-  }
+		return ticketId;
+	}
 
-  public async findByClientId(clientId: number): Promise<TicketPrimitive[]> {
-    return this.ticketModel.getManyByField("clientId", clientId);
-  }
+	public async findByClientId(clientId: number): Promise<TicketPrimitive[]> {
+		return this.ticketModel.getManyByField("clientId", clientId);
+	}
 }

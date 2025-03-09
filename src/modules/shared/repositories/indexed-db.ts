@@ -1,15 +1,17 @@
-import Dexie, { Table } from "dexie";
+import Dexie, { type Table } from "dexie";
 
 const DB_NAME = "ta_web_v2";
 
 interface Model {
 	name: string;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	schema: any;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	init: (table: Table<any>) => void;
 }
 
 class IndexedDB extends Dexie {
-	private isReady: boolean = false;
+	private isReady = false;
 
 	constructor() {
 		super(DB_NAME);
@@ -39,9 +41,9 @@ class IndexedDB extends Dexie {
 
 		this.version(1).stores(modelsToCreate);
 
-		models.forEach((model) => {
+		for (const model of models) {
 			model.init(this.table(model.name));
-		});
+		}
 
 		this.isReady = true;
 	}

@@ -3,36 +3,36 @@ import { TicketDetailModel } from "@tickets/domain/ticket-detail.model";
 import type { TicketDetailPrimitive } from "@tickets/domain/types";
 
 export class TicketDetailRepository {
-  static instance: TicketDetailRepository;
+	static instance: TicketDetailRepository;
 
-  constructor(
-    private readonly ticketDetailModel: TicketDetailModel,
-    private readonly productRepository: ProductRepository
-  ) {}
+	constructor(
+		private readonly ticketDetailModel: TicketDetailModel,
+		private readonly productRepository: ProductRepository,
+	) {}
 
-  public static getInstance() {
-    if (!this.instance) {
-      this.instance = new TicketDetailRepository(
-        TicketDetailModel.getInstance(),
-        ProductRepository.getInstance()
-      );
-    }
-    return this.instance;
-  }
+	public static getInstance() {
+		if (!TicketDetailRepository.instance) {
+			TicketDetailRepository.instance = new TicketDetailRepository(
+				TicketDetailModel.getInstance(),
+				ProductRepository.getInstance(),
+			);
+		}
+		return TicketDetailRepository.instance;
+	}
 
-  public async createMany(ticketDetails: Omit<TicketDetailPrimitive, "id">[]) {
-    const created = await this.ticketDetailModel.bulkAdd(ticketDetails);
+	public async createMany(ticketDetails: Omit<TicketDetailPrimitive, "id">[]) {
+		const created = await this.ticketDetailModel.bulkAdd(ticketDetails);
 
-    const updateStockPromise = ticketDetails.map((td) => {
-      return this.productRepository.updateStock(td.barcode, td.quantity);
-    });
+		const updateStockPromise = ticketDetails.map((td) => {
+			return this.productRepository.updateStock(td.barcode, td.quantity);
+		});
 
-    await Promise.all(updateStockPromise);
+		await Promise.all(updateStockPromise);
 
-    return created;
-  }
+		return created;
+	}
 
-  public async getManyByTicketId(ticketId: number) {
-    return this.ticketDetailModel.getManyByField("ticketId", ticketId);
-  }
+	public async getManyByTicketId(ticketId: number) {
+		return this.ticketDetailModel.getManyByField("ticketId", ticketId);
+	}
 }
