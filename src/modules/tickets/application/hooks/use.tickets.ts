@@ -1,6 +1,7 @@
 import { CreateTicketUseCase } from "@tickets/application/usecases/create-ticket.usecase";
 import { TicketDetailStore } from "@/modules/tickets/domain/types";
 import { toast } from "sonner";
+import { GetTicketsByClientUseCase } from "../usecases/get-tickets-by-client.usecase";
 
 export function useTickets() {
   const create = async (
@@ -40,5 +41,17 @@ export function useTickets() {
       });
   };
 
-  return { create };
+  const getByClient = async (clientId: number) => {
+    const getTicketsUseCase = GetTicketsByClientUseCase.getInstance();
+
+    return getTicketsUseCase.findTickets(clientId);
+  };
+
+  const getDetailByTicketId = async (ticketId: number) => {
+    const getTicketsUseCase = GetTicketsByClientUseCase.getInstance();
+
+    return getTicketsUseCase.findTicketsDetailByTicketId(ticketId);
+  };
+
+  return { create, getByClient, getDetailByTicketId };
 }

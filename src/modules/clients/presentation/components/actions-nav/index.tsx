@@ -22,20 +22,13 @@ const ActionsNavList = [
 ];
 
 interface Props {
-  inHome: boolean;
-  setInHome: (value: boolean) => void;
   disabled?: boolean;
 }
 
-export function ActionsNav({ inHome, disabled, setInHome }: Props) {
+export function ActionsNav({ disabled }: Props) {
   return (
     <nav className="mt-5 space-x-5">
-      <Button
-        variant={inHome ? "default" : "outline"}
-        className="space-x-2"
-        disabled={disabled}
-        onClick={() => setInHome(true)}
-      >
+      <Button variant="outline" className="space-x-2" disabled={disabled}>
         <BookCopy />
         <span>Inicio</span>
       </Button>
@@ -52,12 +45,7 @@ export function ActionsNav({ inHome, disabled, setInHome }: Props) {
           </Button>
         );
       })}
-      <Button
-        variant={!inHome ? "default" : "outline"}
-        className="space-x-2"
-        disabled={disabled}
-        onClick={() => setInHome(false)}
-      >
+      <Button variant="outline" className="space-x-2" disabled={disabled}>
         <BookCopy />
         <span>Reporte</span>
       </Button>

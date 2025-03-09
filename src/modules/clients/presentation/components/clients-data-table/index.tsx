@@ -12,7 +12,7 @@ interface Props {
 
 export function ClientsDataTable({ clients, isPending }: Props) {
   const table = useReactTable({
-    data: clients?.items || [],
+    data: clients?.items,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });

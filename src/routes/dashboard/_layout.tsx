@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <>
       <Navbar />
-      <main className="pt-32">
+      <main className="pt-36 flex-grow flex flex-col">
         <Outlet />
       </main>
     </>

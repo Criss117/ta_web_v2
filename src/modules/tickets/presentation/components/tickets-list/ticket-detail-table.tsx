@@ -1,27 +1,25 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-
-import { columns } from "./columns";
-import { Paginable } from "@shared/models/types";
 import { DataTable } from "@/components/data-table";
-import { ProductPrimitive } from "@products/domain/types";
+import { columns } from "./colmuns";
+import { TicketDetailPrimitive } from "@tickets/domain/types";
 
 interface Props {
-  products: Paginable<ProductPrimitive>;
+  ticketDetail: TicketDetailPrimitive[];
   isPending?: boolean;
 }
 
-export function ProductsDataTable({ products, isPending }: Props) {
+export function TicketDetailTable({ ticketDetail, isPending }: Props) {
   const table = useReactTable({
-    data: products?.items,
+    data: ticketDetail,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <DataTable
-      isPending={isPending || false}
       table={table}
       columnsLength={columns.length}
+      isPending={isPending}
     />
   );
 }

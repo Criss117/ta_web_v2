@@ -31,4 +31,8 @@ export class TicketDetailRepository {
 
     return created;
   }
+
+  public async getManyByTicketId(ticketId: number) {
+    return this.ticketDetailModel.getManyByField("ticketId", ticketId);
+  }
 }

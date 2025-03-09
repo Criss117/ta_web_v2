@@ -34,7 +34,7 @@ function RouteComponent() {
   const client = Route.useLoaderData();
 
   return (
-    <section>
+    <section className="h-full flex flex-col flex-grow">
       <SectionTitle>Estado de cuenta: {client.fullName}</SectionTitle>
       <ClientScreen client={client} />
     </section>

@@ -8,7 +8,7 @@ interface Props {
 export function TableBodySkeleton({ columnsLength }: Props) {
   return (
     <>
-      {Array.from({ length: 10 }).map((_, index) => (
+      {Array.from({ length: 5 }).map((_, index) => (
         <TableRow key={index}>
           <TableCell colSpan={columnsLength} className="h-[73px]">
             <Skeleton className="w-full h-full" />

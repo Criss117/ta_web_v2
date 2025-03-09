@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Dexie, { Table } from "dexie";
 
 const DB_NAME = "ta_web_v2";
 
 interface Model {
   name: string;
-  schema: Record<string, unknown>;
-  init: (table: Table<unknown>) => void;
+  schema: any;
+  init: (table: Table<any>) => void;
 }
 
 class IndexedDB extends Dexie {

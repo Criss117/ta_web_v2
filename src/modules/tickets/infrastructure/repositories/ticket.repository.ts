@@ -1,9 +1,9 @@
 import { ClientRepository } from "@clients/infrastructure/repositories/client.repository";
-import { TicketModel } from "@/modules/tickets/domain/ticket.model";
+import { TicketModel } from "@tickets/domain/ticket.model";
 import { TicketsMapper } from "@tickets/infrastructure/mappers/tickets.mapper";
 import { TicketDetailRepository } from "@tickets/infrastructure/repositories/ticket-detail.repository";
 import { TicketDetailMapper } from "@tickets/infrastructure/mappers/ticket-detail.mapper";
-import type { TicketDetailStore } from "@/modules/tickets/domain/types";
+import type { TicketDetailStore, TicketPrimitive } from "@tickets/domain/types";
 
 export class TicketRepository {
   static instance: TicketRepository;
@@ -59,5 +59,9 @@ export class TicketRepository {
     );
 
     return ticketId;
+  }
+
+  public async findByClientId(clientId: number): Promise<TicketPrimitive[]> {
+    return this.ticketModel.getManyByField("clientId", clientId);
   }
 }

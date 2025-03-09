@@ -34,6 +34,12 @@ export abstract class Model<T, K = number> {
     return model ? model : undefined;
   }
 
+  async getManyByField(field: keyof T, value: string | number) {
+    const model = await this.table.where({ [field]: value }).toArray();
+
+    return model;
+  }
+
   async getAll(): Promise<T[]> {
     return this.table.toArray();
   }
