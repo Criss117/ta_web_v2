@@ -12,6 +12,14 @@ interface Props {
 export function TicketsList({ tickets, selectTicket }: Props) {
 	const multipleYears = Object.keys(tickets || {});
 
+	if (multipleYears.length === 0) {
+		return (
+			<div className="w-full px-1 py-1 space-y-2 bg-light-300 min-h-[80%] h-[80%] max-h-[80%] text-center">
+				No hay tickets
+			</div>
+		);
+	}
+
 	if (multipleYears.length === 1) {
 		const year = Number(multipleYears[0]);
 		return (

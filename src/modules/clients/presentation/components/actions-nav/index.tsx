@@ -6,7 +6,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CreateDebtPayment } from "@debt-payment/presentation/components/create-debt-payment";
+import { DebtPaymentList } from "@debt-payment/presentation/components/debt-payment-list";
 import type { ClientPrimitive } from "@clients/domain/types";
+import { SettleDebt } from "@debt-payment/presentation/components/settle-debt";
 
 const ActionsNavList = [
 	{
@@ -17,10 +19,12 @@ const ActionsNavList = [
 	{
 		title: "Liquidar Adeudo",
 		icon: CreditCard,
+		Cmp: SettleDebt,
 	},
 	{
 		title: "Detalles de abono",
 		icon: ReceiptText,
+		Cmp: DebtPaymentList,
 	},
 ];
 
@@ -37,7 +41,7 @@ export function ActionsNav({ disabled, client }: Props) {
 				<span>Inicio</span>
 			</Button>
 			{ActionsNavList.map(({ title, icon: Icon, Cmp }) => {
-				if (Cmp) return <Cmp client={client} />;
+				if (Cmp) return <Cmp client={client} key={title} />;
 
 				return (
 					<Button

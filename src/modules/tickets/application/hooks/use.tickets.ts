@@ -26,13 +26,7 @@ export function useTickets() {
 				const message =
 					err.error || err.message || "Ocurrió un error realizar la operación";
 
-				toast("Error", {
-					description: message,
-					style: {
-						background: "var(--destructive)",
-						borderColor: "var(--destructive)",
-					},
-				});
+				toast.error(message);
 
 				return {
 					success: false,

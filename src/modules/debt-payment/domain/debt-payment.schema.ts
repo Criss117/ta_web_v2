@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const DebtPaymentSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 	amount: z.number(),
 	lastBalance: z.number(),
 	clientId: z.number(),

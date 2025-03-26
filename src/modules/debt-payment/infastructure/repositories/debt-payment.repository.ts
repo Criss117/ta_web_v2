@@ -1,26 +1,29 @@
 import { DebtPaymentModel } from "@debt-payment/domain/debt-payment.model";
 import { ClientRepository } from "@clients/infrastructure/repositories/client.repository";
+import { TicketRepository } from "@tickets/infrastructure/repositories/ticket.repository";
 
-export class DebtPaymentReposiory {
-	static instance: DebtPaymentReposiory;
+export class DebtPaymentRepository {
+	static instance: DebtPaymentRepository;
 
 	private constructor(
 		private readonly debtPaymentModel: DebtPaymentModel,
 		private readonly clientRepository: ClientRepository,
+		private readonly ticketRepository: TicketRepository,
 	) {}
 
 	public static getInstance() {
-		if (!DebtPaymentReposiory.instance) {
-			DebtPaymentReposiory.instance = new DebtPaymentReposiory(
+		if (!DebtPaymentRepository.instance) {
+			DebtPaymentRepository.instance = new DebtPaymentRepository(
 				DebtPaymentModel.getInstance(),
 				ClientRepository.getInstance(),
+				TicketRepository.getInstance(),
 			);
 		}
-		return DebtPaymentReposiory.instance;
+		return DebtPaymentRepository.instance;
 	}
 
-	public async getManyByClientId(clientId: string) {
-		return this.debtPaymentModel.getByField("clientId", clientId);
+	public async getManyByClientId(clientId: number) {
+		return this.debtPaymentModel.getManyByField("clientId", clientId);
 	}
 
 	public async create(amount: number, clientId: number) {
@@ -74,5 +77,29 @@ export class DebtPaymentReposiory {
 		await this.clientRepository.updateBalance(client.id, newBalance);
 
 		return this.debtPaymentModel.delete(id);
+	}
+
+	public async settleDebt(clientId: number) {
+		const debtPayment = await this.debtPaymentModel.getManyByField(
+			"clientId",
+			clientId,
+		);
+
+		if (!debtPayment) {
+			throw new Error("Debt payment not found");
+		}
+
+		const debtPromises = debtPayment.map((debtPayment) => {
+			return this.debtPaymentModel.update(debtPayment.id, {
+				deletedAt: new Date(),
+				isActive: false,
+			});
+		});
+
+		await Promise.all(debtPromises);
+
+		await this.ticketRepository.settleDebt(clientId);
+
+		await this.clientRepository.settleDebt(clientId);
 	}
 }

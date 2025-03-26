@@ -108,4 +108,12 @@ export abstract class Model<T, K = number> {
 	async bulkAdd(data: Omit<T, "id">[]) {
 		return this.table.bulkAdd(data as T[]);
 	}
+
+	async deletMany(ids: K[]) {
+		return this.table.bulkDelete(ids);
+	}
+
+	async deleteManyByField(field: keyof T, value: string | number) {
+		return this.table.where({ [field]: value }).delete();
+	}
 }

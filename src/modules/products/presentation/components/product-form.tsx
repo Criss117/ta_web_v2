@@ -70,7 +70,7 @@ export function ProductForm({ mutateFn, product }: Props) {
 
 	const handleSubmit = async (data: ProductFormDto) => {
 		if (isLoading) {
-			toast("Ya se estan enviando los datos");
+			toast.error("Ya se estan enviando los datos");
 			return;
 		}
 

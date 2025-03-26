@@ -62,6 +62,25 @@ export class TicketRepository {
 	}
 
 	public async findByClientId(clientId: number): Promise<TicketPrimitive[]> {
-		return this.ticketModel.getManyByField("clientId", clientId);
+		return (await this.ticketModel.getManyByField("clientId", clientId)).filter(
+			(t) => t.isActive === true,
+		);
+	}
+
+	public async settleDebt(clientId: number) {
+		const tickets = await this.ticketModel.getManyByField("clientId", clientId);
+
+		if (!tickets) {
+			throw new Error("Debt payment not found");
+		}
+
+		const promises = tickets.map((ticket) => {
+			return this.ticketModel.update(ticket.id, {
+				deletedAt: new Date(),
+				isActive: false,
+			});
+		});
+
+		return Promise.all(promises);
 	}
 }

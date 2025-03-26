@@ -1,7 +1,7 @@
 import { ClientsMapper } from "@clients/infrastructure/mappers/clients.mapper";
 import { ClientModel } from "@clients/domain/client.model";
-import type { Paginable } from "@shared/models/types";
 import type { ClientFormDto, ClientPrimitive } from "@clients/domain/types";
+import type { Paginable } from "@shared/models/types";
 
 export class ClientRepository {
 	static instance: ClientRepository;
@@ -93,6 +93,12 @@ export class ClientRepository {
 			client.deletedAt = new Date();
 			client.isActive = false;
 			return client;
+		});
+	}
+
+	public async settleDebt(clientdId: number) {
+		await this.clientModel.update(clientdId, {
+			balance: 0,
 		});
 	}
 }

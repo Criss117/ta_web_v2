@@ -44,13 +44,7 @@ export function useClientForm(client?: ClientPrimitive) {
 					err.message ||
 					"Ocurrió un error al enviar el formulario";
 
-				toast("Error", {
-					description: message,
-					style: {
-						background: "var(--destructive)",
-						borderColor: "var(--destructive)",
-					},
-				});
+				toast.error(message);
 			});
 	};
 

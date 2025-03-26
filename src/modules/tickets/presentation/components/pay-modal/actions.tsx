@@ -7,51 +7,45 @@ import { useTickets } from "@tickets/application/hooks/use.tickets";
 import { useTicketsStore } from "@tickets/application/store/tickets.store";
 
 interface Props {
-  isCredit: boolean;
-  ticket: TicketState;
-  clientId: number | null;
-  onSuccess: () => void;
+	isCredit: boolean;
+	ticket: TicketState;
+	clientId: number | null;
+	onSuccess: () => void;
 }
 
 export function PayModalActions({
-  isCredit,
-  ticket,
-  clientId,
-  onSuccess,
+	isCredit,
+	ticket,
+	clientId,
+	onSuccess,
 }: Props) {
-  const [isPending, startTansition] = useTransition();
-  const clearTicket = useTicketsStore((state) => state.clearTicket);
-  const { create } = useTickets();
+	const [isPending, startTansition] = useTransition();
+	const clearTicket = useTicketsStore((state) => state.clearTicket);
+	const { create } = useTickets();
 
-  const handleClick = () => {
-    if (isCredit && clientId === null) {
-      toast("Error", {
-        description: "Debes seleccionar un cliente",
-        style: {
-          background: "var(--destructive)",
-          borderColor: "var(--destructive)",
-        },
-      });
+	const handleClick = () => {
+		if (isCredit && clientId === null) {
+			toast.error("Debe seleccionar un cliente");
 
-      return;
-    }
+			return;
+		}
 
-    startTansition(async () => {
-      await create(ticket.detail, clientId).then((res) => {
-        if (!res.success) return;
+		startTansition(async () => {
+			await create(ticket.detail, clientId).then((res) => {
+				if (!res.success) return;
 
-        clearTicket(ticket.temporaryId);
-        onSuccess();
-      });
-    });
-  };
+				clearTicket(ticket.temporaryId);
+				onSuccess();
+			});
+		});
+	};
 
-  return (
-    <Button className="w-full" onClick={handleClick} disabled={isPending}>
-      <LoaderComponent
-        title="Cobrar solo registrando la venta"
-        isLoading={isPending}
-      />
-    </Button>
-  );
+	return (
+		<Button className="w-full" onClick={handleClick} disabled={isPending}>
+			<LoaderComponent
+				title="Cobrar solo registrando la venta"
+				isLoading={isPending}
+			/>
+		</Button>
+	);
 }

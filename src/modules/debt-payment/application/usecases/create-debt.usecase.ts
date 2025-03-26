@@ -1,14 +1,14 @@
-import { DebtPaymentReposiory } from "@debt-payment/infastructure/repositories/debt-payment.repository";
+import { DebtPaymentRepository } from "@debt-payment/infastructure/repositories/debt-payment.repository";
 
 export class CreateDebtUsecase {
 	static instance: CreateDebtUsecase;
 
-	constructor(private readonly debtPaymentRepository: DebtPaymentReposiory) {}
+	constructor(private readonly debtPaymentRepository: DebtPaymentRepository) {}
 
 	public static getInstance() {
 		if (!CreateDebtUsecase.instance) {
 			CreateDebtUsecase.instance = new CreateDebtUsecase(
-				DebtPaymentReposiory.getInstance(),
+				DebtPaymentRepository.getInstance(),
 			);
 		}
 		return CreateDebtUsecase.instance;
