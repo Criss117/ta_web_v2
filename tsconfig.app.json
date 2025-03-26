@@ -25,7 +25,8 @@
 			"@clients/*": ["./src/modules/clients/*"],
 			"@ui/*": ["./src/components/ui/*"],
 			"@form/*": ["./src/components/form/*"],
-			"@tickets/*": ["./src/modules/tickets/*"]
+			"@tickets/*": ["./src/modules/tickets/*"],
+			"@debt-payment/*": ["./src/modules/debt-payment/*"]
 		}
 	},
 	"include": ["src"]

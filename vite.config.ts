@@ -20,6 +20,7 @@ export default defineConfig({
 			"@ui": path.resolve(__dirname, "./src/components/ui"),
 			"@form": path.resolve(__dirname, "./src/components/form"),
 			"@tickets": path.resolve(__dirname, "./src/modules/tickets"),
+			"@debt-payment": path.resolve(__dirname, "./src/modules/debt-payment"),
 		},
 	},
 	build: {

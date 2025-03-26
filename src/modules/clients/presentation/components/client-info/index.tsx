@@ -41,7 +41,7 @@ export function ClientInfo({ client }: Props) {
 
 	return (
 		<>
-			<ActionsNav />
+			<ActionsNav client={client} />
 			<div className="flex mt-5 gap-x-10 flex-grow ">
 				<div className="w-1/5">
 					{tickets && (

@@ -4,39 +4,39 @@ import { GetOneClientByUseCase } from "@clients/application/usecases/get-one-cli
 import { ClientScreen } from "@clients/presentation/screens/client.screen";
 
 export const Route = createFileRoute("/dashboard/_layout/clients/$identifier/")(
-  {
-    component: RouteComponent,
-    loader: async ({ params: { identifier } }) => {
-      const getOneBy = GetOneClientByUseCase.getInstance();
+	{
+		component: RouteComponent,
+		loader: async ({ params: { identifier } }) => {
+			const getOneBy = GetOneClientByUseCase.getInstance();
 
-      const product = await getOneBy.identifier(identifier);
+			const client = await getOneBy.identifier(identifier);
 
-      if (!product) {
-        throw redirect({
-          to: "/dashboard/clients",
-          search: { page: 1, size: 20 },
-        });
-      }
+			if (!client) {
+				throw redirect({
+					to: "/dashboard/clients",
+					search: { page: 1, size: 20 },
+				});
+			}
 
-      return product;
-    },
-    head: ({ loaderData }) => ({
-      meta: [
-        {
-          title: `Ta Web | ${loaderData.fullName}`,
-        },
-      ],
-    }),
-  }
+			return client;
+		},
+		head: ({ loaderData }) => ({
+			meta: [
+				{
+					title: `Ta Web | ${loaderData.fullName}`,
+				},
+			],
+		}),
+	},
 );
 
 function RouteComponent() {
-  const client = Route.useLoaderData();
+	const client = Route.useLoaderData();
 
-  return (
-    <section className="h-full flex flex-col flex-grow">
-      <SectionTitle>Estado de cuenta: {client.fullName}</SectionTitle>
-      <ClientScreen client={client} />
-    </section>
-  );
+	return (
+		<section className="h-full flex flex-col flex-grow">
+			<SectionTitle>Estado de cuenta: {client.fullName}</SectionTitle>
+			<ClientScreen client={client} />
+		</section>
+	);
 }
