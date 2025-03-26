@@ -23,7 +23,9 @@ export class DebtPaymentRepository {
 	}
 
 	public async getManyByClientId(clientId: number) {
-		return this.debtPaymentModel.getManyByField("clientId", clientId);
+		return (
+			await this.debtPaymentModel.getManyByField("clientId", clientId)
+		).filter((d) => d.isActive === true);
 	}
 
 	public async create(amount: number, clientId: number) {
