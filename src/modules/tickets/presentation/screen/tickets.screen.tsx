@@ -29,9 +29,9 @@ export function TicketsScreen() {
 			<SectionLayout className="space-y-4 border-0 mt-0">
 				<SectionHeader className="bg-light-200 flex-col space-y-5">
 					<div className="w-1/3">
-						<ProductSearchBarcode searchByQueryFn={handleSearch} />
+						<ProductSearchBarcode searchProduct={handleSearch} />
 					</div>
-					<TicketsOptions />
+					<TicketsOptions searchProduct={handleSearch} />
 					<TicketsDataTable />
 				</SectionHeader>
 			</SectionLayout>

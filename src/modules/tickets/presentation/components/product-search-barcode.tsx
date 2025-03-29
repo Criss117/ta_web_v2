@@ -8,10 +8,10 @@ import { X } from "lucide-react";
 import type { ProductPrimitive } from "@products/domain/types";
 
 interface Props {
-	searchByQueryFn: (product: ProductPrimitive) => void;
+	searchProduct: (product: ProductPrimitive) => void;
 }
 
-export function ProductSearchBarcode({ searchByQueryFn }: Props) {
+export function ProductSearchBarcode({ searchProduct }: Props) {
 	const [barCode, setBarCode] = useState("");
 	const { getOneByBarcode } = useProducts();
 
@@ -28,7 +28,7 @@ export function ProductSearchBarcode({ searchByQueryFn }: Props) {
 
 		if (!product) return null;
 
-		searchByQueryFn(product);
+		searchProduct(product);
 	};
 
 	return (
